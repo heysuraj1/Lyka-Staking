@@ -1,12 +1,12 @@
 import User from "../../../helper/Modal/User";
 import initDB from "../../../helper/initDB";
 import bcrypt from "bcrypt";
-// ||
+
 initDB()
+
 export default async (req, res) => {
   const { FullName, Position, Country, ContactNumber, EmailId, UpperlineUser, Passsword } = req.body
   console.log(UpperlineUser)
-// console.log(FullName, Position, Country, ContactNumber, EmailId, Passsword)
 
   if (!FullName|| !Position|| !Country|| !ContactNumber|| !EmailId|| !Passsword) {
     return res.status(404).json({ error: 'You Have Not Provided All The Informations' })

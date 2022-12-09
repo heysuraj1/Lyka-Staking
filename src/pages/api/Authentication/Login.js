@@ -10,8 +10,11 @@ export default async (req,res) =>{
     const { identifier, password } = req.body;
 
     if (!identifier || !password) {
+      
       return res
+
         .status(404)
+      
         .json({ error: "You Have Not Provided All The Informations" });
     }
   

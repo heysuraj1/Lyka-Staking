@@ -1,35 +1,13 @@
-import initDB from "../../../helper/initDB";
-import PackageHistory from "../../../helper/Modal/History/PackageHistory";
-
-
+import initDB from '../../../helper/initDB'
+import PackageHistory from '../../../helper/Modal/History/PackageHistory'
 
 initDB()
-export default async (req,res) =>{
 
+export default async (req, res) => {
+    
+  const findPackage = await PackageHistory.find()
 
-    const findPackage = await PackageHistory.find();
+  console.log(findPackage)
 
-
-
-    console.log(findPackage)
-
-
-
-
-
-
-
-
-
-    res.json("All Rewards Done")
-
-
-
-
-
-
-
-
-
-
+  res.json('All Rewards Done')
 }

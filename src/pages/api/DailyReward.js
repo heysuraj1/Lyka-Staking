@@ -3,6 +3,7 @@ import PackageHistory from '../../helper/Modal/History/PackageHistory'
 import User from '../../helper/Modal/User'
 
 initDB()
+
 export default async (req, res) => {
   var list = []
 

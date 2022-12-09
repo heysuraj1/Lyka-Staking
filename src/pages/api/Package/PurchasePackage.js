@@ -3,7 +3,9 @@ import Package from '../../../helper/Modal/Package';
 import PackageHistory from '../../../helper/Modal/History/PackageHistory';
 
 initDB()
+
 export default async (req, res) => {
+  
   const { packageId, Anount ,id} = req.body
 
   console.log(packageId)
