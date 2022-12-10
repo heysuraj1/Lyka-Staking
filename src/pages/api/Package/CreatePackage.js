@@ -1,18 +1,19 @@
 import initDB from '../../../helper/initDB'
-import Package from '../../../helper/Modal/Package'
+import Plan from '../../../helper/Modal/Plan'
 
 initDB()
 
 export default async (req, res) => {
   
-  const { PackageName, PackagePrice, PaackagePeriod, PackageMaximumLimit, LykaToken } = req.body
+  const { PackageName, PackagePrice, PaackagePeriod, PackageMaximumLimit, LykaToken ,PackageReferalCommision} = req.body
 
-  const CreatePackage = await Package({
+  const CreatePackage = await Plan({
     PackageName,
     PackagePrice,
     PaackagePeriod,
     PackageMaximumLimit,
-    LykaToken
+    LykaToken,
+    PackageReferalCommision
   }).save()
 
 

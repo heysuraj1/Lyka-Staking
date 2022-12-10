@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 
-const Package = mongoose.Schema(
+const Plan = mongoose.Schema(
   {
     PackageName: {
       default: 'null',
@@ -22,10 +22,14 @@ const Package = mongoose.Schema(
     LykaToken: {
       default: 'null',
       type: 'String'
+    },
+    PackageReferalCommision:{
+      default: '0',
+      type: 'String'
     }
   },
   {
     timestamps: true
   }
 )
-export default mongoose.models.Package || mongoose.model('Package', Package)
+export default mongoose.models.Plan || mongoose.model('Plan', Plan)

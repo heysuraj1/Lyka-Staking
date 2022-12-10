@@ -1,5 +1,5 @@
 import initDB from '../../../helper/initDB';
-import Package from '../../../helper/Modal/Package';
+import Package from '../../../helper/Modal/Plan';
 import PackageHistory from '../../../helper/Modal/History/PackageHistory';
 
 initDB()

@@ -15,13 +15,15 @@ import {useState,useEffect} from "react"
 
 const MUITable = () => {
 
-  const [packageId, setPackageId] = useState("638f8724217e0034fdce9d0a")
+  const [packageId, setPackageId] = useState("6394c022211b0809e51b74e8")
   const [price, setPrice] = useState("")
+  const [datas, setDatas] = useState("")
 
 
 
   useEffect(() => {
 getData()
+getAllPackages()
   }, [])
   
   const getData = () =>{
@@ -39,6 +41,34 @@ getData()
       console.log(err)
      })
     }
+
+
+
+  const getAllPackages = () =>{
+
+
+    try {
+
+      axios.get("/api/Package/getAllPackages")
+      .then((acc)=>{
+        console.log(acc.data)
+        setDatas(acc.data)
+        
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+
+
+    } catch (error) {
+      console.log(error)
+    }
+
+
+
+
+
+  }
 
 
 
@@ -60,6 +90,7 @@ getData()
       })
       .then((acc)=>{
         console.log(acc.data)
+        window.alert("Package Created Successfuly")
       })
       .catch((err)=>{
         console.log(err)
@@ -91,12 +122,20 @@ getData()
                 id='form-layouts-separator-select'
                 labelId='form-layouts-separator-select-label'
               >
-                <MenuItem value='Lyka Junior - $100'>Lyka Junior - $100</MenuItem>
-                <MenuItem value='Lyka Pro - $500'>Lyka Pro - $500</MenuItem>
-                <MenuItem value='Lyka Senate - $1000'>Lyka Senate - $1000</MenuItem>
-                <MenuItem value='Lyka Director - $2500'>Lyka Director - $2500</MenuItem>
-                <MenuItem value='Lyka President - $5000'>Lyka President - $5000</MenuItem>
-                <MenuItem value='Lyka Ambassador - $10000'>Lyka Ambassador - $10000</MenuItem>
+                {
+                  datas ? 
+                  datas.map((acc)=>{
+                    return <MenuItem key={acc._id} value={`${acc.PackageName} - ${"$"+acc.PackagePrice}`}>{acc.PackageName} - ${acc.PackagePrice}</MenuItem>
+                    
+                  })
+
+
+                  :
+
+
+                  <MenuItem value='null'>Loading...</MenuItem>
+                
+                }
               </Select>
             </FormControl>
 

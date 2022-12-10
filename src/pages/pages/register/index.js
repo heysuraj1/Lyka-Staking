@@ -1,10 +1,5 @@
-// ** React Imports
 import { useState, Fragment } from 'react'
-
-// ** Next Imports
 import Link from 'next/link'
-
-// ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
@@ -21,26 +16,20 @@ import MuiCard from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel from '@mui/material/FormControlLabel'
 import { useRouter } from 'next/router'
-
-// ** Icons Imports
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 import Google from 'mdi-material-ui/Google'
 import Github from 'mdi-material-ui/Github'
 import Twitter from 'mdi-material-ui/Twitter'
 import Facebook from 'mdi-material-ui/Facebook'
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-
-// ** Configs
 import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
-
-// ** Demo Imports
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 import axios from 'axios'
 
-// ** Styled Components
+
 const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '28rem' }
 }))
@@ -60,6 +49,8 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
   }
 }))
 
+
+
 const RegisterPage = ({setShowRegister}) => {
   const router = useRouter()
 
@@ -75,6 +66,7 @@ const RegisterPage = ({setShowRegister}) => {
   const [EmailId, setEmailId] = useState("")
   const [Passsword, setPasssword] = useState("")
   const [referCode, setReferCode] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const theme = useTheme()
 
@@ -92,6 +84,7 @@ const RegisterPage = ({setShowRegister}) => {
 
 
   const handleClick = () =>{
+    setIsLoading(true)
     try {
       axios.post("/api/Authentication/Register",{
         FullName,
@@ -103,11 +96,14 @@ const RegisterPage = ({setShowRegister}) => {
         UpperlineUser:referCode
       })
       .then((acc)=>{
-        console.log(acc.data)
-        localStorage.setItem("jwt",JSON.stringify(acc.data))
-        router.reload()
-      })
-      .catch((err)=>{
+    setIsLoading(false)
+    
+    console.log(acc.data)
+    localStorage.setItem("jwt",JSON.stringify(acc.data))
+    router.reload()
+  })
+  .catch((err)=>{
+        setIsLoading(false)
         console.log(err)
       })
 
@@ -115,11 +111,6 @@ const RegisterPage = ({setShowRegister}) => {
       console.log(error)
     }
   }
-
-
-
-
-
 
 
 
@@ -206,10 +197,24 @@ const RegisterPage = ({setShowRegister}) => {
             </Typography>
             <Typography variant='body2'>Make your app management easy and fun!</Typography>
           </Box>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
+          <form noValidate autoComplete='off'  onSubmit={e => e.preventDefault()}>
             <TextField autoFocus onChange={(e)=>{setReferCode(e.target.value)}} fullWidth  label='Referral Code' sx={{ marginBottom: 4 }} />
             <TextField onChange={(e)=>{setFullName(e.target.value)}}  fullWidth  label='Full Name' sx={{ marginBottom: 4 }} />
-            <TextField onChange={(e)=>{setPosition(e.target.value)}}  fullWidth  label='Select Position' sx={{ marginBottom: 4 }} />
+            {/* <TextField onChange={(e)=>{setPosition(e.target.value)}}  fullWidth  label='Select Position' sx={{ marginBottom: 4 }} /> */}
+
+            <FormControl style={{marginBottom:30}} fullWidth>
+              <InputLabel id='form-layouts-separator-select-label'>Select Side</InputLabel>
+              <Select
+                label='Select Side'
+                defaultValue=''
+                id='form-layouts-separator-select'
+                labelId='form-layouts-separator-select-label'
+                onChange={(e)=>{setPosition(e.target.value)}}
+              >
+                <MenuItem value='Right'>Right</MenuItem>
+                <MenuItem value='Left'>Left</MenuItem>
+              </Select>
+            </FormControl>
             <TextField onChange={(e)=>{setEmailId(e.target.value)}} fullWidth type='email' label='Email' sx={{ marginBottom: 4 }} />
             <TextField onChange={(e)=>{setCountry(e.target.value)}}  fullWidth  label='Country' sx={{ marginBottom: 4 }} />
             <TextField onChange={(e)=>{setContactNumber(e.target.value)}}  fullWidth type="number" label='Mobile' sx={{ marginBottom: 4 }} />
@@ -246,7 +251,17 @@ const RegisterPage = ({setShowRegister}) => {
               }
             />
             {
-              FullName && Position && EmailId && Country && ContactNumber && Passsword ? 
+              FullName && Position && EmailId && Country && ContactNumber && Passsword ?
+              
+              isLoading ? 
+
+
+              <Button fullWidth style={{backgroundColor:"gray"}} size='large' type='submit' variant='contained' sx={{ marginBottom: 7 }}>
+              Loading...
+            </Button>
+              :
+
+
 
             <Button onClick={handleClick} fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7 }}>
               Sign up
