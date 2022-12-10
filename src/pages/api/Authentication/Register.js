@@ -11,15 +11,6 @@ export default async (req, res) => {
   if (!FullName|| !Position|| !Country|| !ContactNumber|| !EmailId|| !Passsword) {
     return res.status(404).json({ error: 'You Have Not Provided All The Informations' })
   }
-  // const user = await User.findOne({ EmailId })
-  // const number = await User.findOne({ ContactNumber })
-
-  // if (user) {
-  //   return res.status(422).json({ error: 'This Email Already Exist Please Choose Another One' })
-  // }
-  // if (number) {
-  //   return res.status(422).json({ error: 'This Number Already Exist Please Choose Another One' })
-  // }
 
   if (UpperlineUser) {
     var checkReferalUser = await User.findOne({ SponserCode: UpperlineUser })
