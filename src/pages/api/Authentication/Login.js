@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 
 
 initDB()
+
 export default async (req,res) =>{
 
 
