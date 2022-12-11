@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { CacheProvider } from '@emotion/react'
 import UserLayout from 'src/layouts/UserLayout'
 import { SettingsConsumer, SettingsProvider } from 'src/@core/context/settingsContext'
@@ -15,6 +15,13 @@ const App = props => {
   const [showRegister, setShowRegister] = useState(false)
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
   const getLayout = Component.getLayout ?? (page => <UserLayout>{page}</UserLayout>)
+
+  useEffect(() => {
+    
+    setShowRegister(true)
+    
+  }, [])
+  
 
 
   return (
