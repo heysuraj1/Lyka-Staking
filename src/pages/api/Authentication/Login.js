@@ -19,26 +19,22 @@ export default async (req,res) =>{
     }
   
     if (identifier.includes(".com")) {
-      // const user = await User.findOne({ Email: identifier });
-      // if (!user) {
-      //   return res.status(404).json({ error: "User Don't Exists" });
-      // }
-  
-      // const doMatch = await bcrypt.compare(password, user.Password);
-  
-      // if (doMatch) {
-      //   res.status(201).json(user);
-      // } else {
-      //   return res.status(401).json({ error: "email or password don't match" });
-      // }
     return res.status(502).json({ error: "Please Enter UserID"} )
     } else {
-      const number = await User.findOne({ UserName: identifier });
+      console.log(identifier)
+      const number = await User.find({ UserName: identifier });
+
+
+      console.log(number)
+
       if (!number) {
         return res.status(404).json({ error: "User Don't Exists" });
       }
+
+      console.log("entered password ===> "+password)
+      console.log("my hash ===> "+number[0].Passsword)
   
-      const doMatch = await bcrypt.compare(password, number.Password);
+      const doMatch = await bcrypt.compare(password, number[0].Passsword);
   
       if (doMatch) {
         res.status(201).json(number);

@@ -28,6 +28,19 @@ const navigation = () => {
       path: '/Package'
     },
     {
+      sectionTitle: 'Records'
+    },
+    {
+      title: 'Referal Commisions',
+      icon: AccountCogOutline,
+      path: '/ReferalCommisions'
+    },
+    {
+      title: 'Daily Bounus',
+      icon: AccountCogOutline,
+      path: '/DailyBounus'
+    },
+    {
       sectionTitle: 'Pages'
     },
     {

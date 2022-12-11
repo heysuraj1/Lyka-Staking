@@ -3,31 +3,31 @@ import mongoose from 'mongoose'
 const PackageHistory =  mongoose.Schema(
   {
     PackageOwner: {
-      default: 'null',
+      required:true,
       type: 'String'
     },
     PackageName: {
-      default: 'null',
+      required:true,
       type: 'String'
     },
     PackagePrice: {
-      default: 'null',
+      required:true,
       type: 'String'
     },
     PaackagePeriod: {
-      default: 'null',
+      required:true,
       type: 'String'
     },
     PackageMaximumLimit: {
-      default: '300',
+      default: '500',
       type: 'String'
     },
     LykaToken: {
-      default: 'null',
+      required:true,
       type: 'String'
     },
     PackgeRewardWallte: {
-      default: 'null',
+      required:true,
       type: 'String'
     }
   },
@@ -35,4 +35,4 @@ const PackageHistory =  mongoose.Schema(
     timestamps: true
   }
 )
-export default mongoose.models.PackageHistory || mongoose.model('PackageHistory', PackageHistory)
+export default mongoose.models.PackageHis || mongoose.model('PackageHis', PackageHistory)

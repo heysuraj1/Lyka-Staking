@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -19,6 +19,7 @@ import InformationOutline from 'mdi-material-ui/InformationOutline'
 import TabInfo from 'src/views/account-settings/TabInfo'
 import TabAccount from 'src/views/account-settings/TabAccount'
 import TabSecurity from 'src/views/account-settings/TabSecurity'
+import axios from 'axios'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
@@ -44,10 +45,36 @@ const TabName = styled('span')(({ theme }) => ({
 const AccountSettings = () => {
   // ** State
   const [value, setValue] = useState('account')
+  const [datas, setDatas] = useState("")
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+
+  useEffect(() => {
+    const getData = () => {
+      var ids = localStorage.getItem('jwt')
+      var parsedId = JSON.parse(ids)
+
+      try {
+        axios
+          .post('/api/User/UserProfile', {
+            id: parsedId._id
+          })
+          .then(acc => {
+            console.log(acc.data)
+            setDatas(acc.data)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    getData()
+  }, [])
 
   return (
     <Card>
@@ -66,35 +93,22 @@ const AccountSettings = () => {
               </Box>
             }
           />
-          <Tab
-            value='security'
-            label={
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <LockOpenOutline />
-                <TabName>Security</TabName>
-              </Box>
-            }
-          />
-          <Tab
-            value='info'
-            label={
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <InformationOutline />
-                <TabName>Info</TabName>
-              </Box>
-            }
-          />
         </TabList>
+            {datas ?
+            
+            <TabPanel sx={{ p: 0 }} value='account'>
 
-        <TabPanel sx={{ p: 0 }} value='account'>
-          <TabAccount />
-        </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='security'>
-          <TabSecurity />
-        </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='info'>
-          <TabInfo />
-        </TabPanel>
+            <TabAccount datas={datas} />
+          </TabPanel>
+            
+          
+          
+          :
+          
+          
+          <></>}
+       
+      
       </TabContext>
     </Card>
   )

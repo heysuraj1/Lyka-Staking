@@ -23,14 +23,14 @@ export default async (req, res) => {
     } else {
 
 
-      var UplineUser = await User.findById(checkReferalUser._id)
+      // var UplineUser = await User.findById(checkReferalUser._id)
 
 
-      var oldWallete = UplineUser.MainWallet
+      // var oldWallete = UplineUser.MainWallet
 
-      var latestWallete = 10 + Number(oldWallete)
+      // var latestWallete = 10 + Number(oldWallete)
 
-      await User.findByIdAndUpdate({_id:checkReferalUser._id},{MainWallet:latestWallete})
+      // await User.findByIdAndUpdate({_id:checkReferalUser._id},{MainWallet:latestWallete})
 
     }
   }

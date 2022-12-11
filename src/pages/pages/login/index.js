@@ -103,6 +103,8 @@ const LoginPage = ({setShowRegister}) => {
       })
       .then((acc)=>{
         console.log(acc.data)
+    localStorage.setItem("jwt",JSON.stringify(acc.data[0]))
+
         router.reload()
 
       })

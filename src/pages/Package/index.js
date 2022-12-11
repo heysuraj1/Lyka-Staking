@@ -11,146 +11,136 @@ import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import axios from 'axios'
-import {useState,useEffect} from "react"
+import { useState, useEffect } from 'react'
+import PackageHistory from './PackageHistory'
 
 const MUITable = () => {
-
-  const [packageId, setPackageId] = useState("6394c022211b0809e51b74e8")
-  const [price, setPrice] = useState("")
-  const [datas, setDatas] = useState("")
-
-
+  const [packageId, setPackageId] = useState('6394c022211b0809e51b74e8')
+  const [price, setPrice] = useState('')
+  const [datas, setDatas] = useState('')
+  const [showHistoryScreen, setShowHistoryScreen] = useState(null)
+  const [TopUpHistory, setTopUpHistory] = useState('')
 
   useEffect(() => {
-getData()
-getAllPackages()
+    getData()
+    getAllPackages()
   }, [])
-  
-  const getData = () =>{
-  
-    var UserData = localStorage.getItem("jwt")
+
+  const getData = () => {
+    var UserData = localStorage.getItem('jwt')
     var parsedData = JSON.parse(UserData)
-  
-    axios.post("/api/Package/CheckPackage",{
-      ids:parsedData._id
-     })
-     .then((acc)=>{
-      console.log(acc.data)
-     })
-     .catch((err)=>{
-      console.log(err)
-     })
-    }
 
-
-
-  const getAllPackages = () =>{
-
-
-    try {
-
-      axios.get("/api/Package/getAllPackages")
-      .then((acc)=>{
-        console.log(acc.data)
-        setDatas(acc.data)
-        
+    axios
+      .post('/api/Package/CheckPackage', {
+        ids: parsedData._id
       })
-      .catch((err)=>{
+      .then(acc => {
+        if (acc.data == 0) {
+          setShowHistoryScreen(false)
+        } else {
+          setShowHistoryScreen(true)
+          setTopUpHistory(acc.data)
+        }
+      })
+      .catch(err => {
         console.log(err)
       })
+  }
 
-
+  const getAllPackages = () => {
+    try {
+      axios
+        .get('/api/Package/getAllPackages')
+        .then(acc => {
+          console.log('below is my data')
+          console.log(acc.data)
+          setDatas(acc.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     } catch (error) {
       console.log(error)
     }
-
-
-
-
-
   }
 
-
-
-
-
-
-
   const handlePurchaseTopUp = () => {
-
-
-    var data = localStorage.getItem("jwt")
+    var data = localStorage.getItem('jwt')
     var parseData = JSON.parse(data)
 
     try {
-      axios.post('/api/Package/PurchasePackage', {
-        packageId:packageId,
-        Anount:price,
-        id:parseData._id
-      })
-      .then((acc)=>{
-        console.log(acc.data)
-        window.alert("Package Created Successfuly")
-      })
-      .catch((err)=>{
-        console.log(err)
-      })
+      axios
+        .post('/api/Package/PurchasePackage', {
+          packageId: packageId,
+          Anount: price,
+          id: parseData._id
+        })
+        .then(acc => {
+          console.log(acc.data)
+          getData()
+          window.alert('Package Created Successfuly')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     } catch (error) {
       console.log(error)
     }
   }
 
-
-
-
   return (
-    <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <Typography variant='h4'>Package</Typography>
-      </Grid>
+    <>
+      {showHistoryScreen == true ? (
+        <PackageHistory TopUpHistory={TopUpHistory} />
+      ) : (
+        showHistoryScreen == false && (
+          <Grid container spacing={6}>
+            <Grid item xs={12}>
+              <Typography variant='h4'>Package</Typography>
+            </Grid>
 
-      <Grid item xs={12}>
-        <Card>
-          <CardHeader title='Topup With Lyka Coin (BEP-20)' titleTypographyProps={{ variant: 'h6' }} />
+            <Grid item xs={12}>
+              <Card>
+                <CardHeader title='Topup With Lyka Coin (BEP-20)' titleTypographyProps={{ variant: 'h6' }} />
 
-          <div style={{ marginLeft: 100, marginRight: 100, marginBottom: 40, marginTop: 20 }}>
-            <FormControl fullWidth>
-              <InputLabel id='form-layouts-separator-select-label'>Select Package</InputLabel>
-              <Select
-                label='Select Package'
-                defaultValue=''
-                id='form-layouts-separator-select'
-                labelId='form-layouts-separator-select-label'
-              >
-                {
-                  datas ? 
-                  datas.map((acc)=>{
-                    return <MenuItem key={acc._id} value={`${acc.PackageName} - ${"$"+acc.PackagePrice}`}>{acc.PackageName} - ${acc.PackagePrice}</MenuItem>
-                    
-                  })
+                <div style={{ marginLeft: 100, marginRight: 100, marginBottom: 40, marginTop: 20 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id='form-layouts-separator-select-label'>Select Package</InputLabel>
+                    <Select
+                      label='Select Package'
+                      defaultValue=''
+                      id='form-layouts-separator-select'
+                      labelId='form-layouts-separator-select-label'
+                    >
+                      {datas ? (
+                        datas.map(acc => {
+                          return (
+                            <MenuItem key={acc._id} value={`${acc.PackageName} - ${'$' + acc.PackagePrice}`}>
+                              {acc.PackageName} - ${acc.PackagePrice}
+                            </MenuItem>
+                          )
+                        })
+                      ) : (
+                        <MenuItem value='null'>Loading...</MenuItem>
+                      )}
+                    </Select>
+                  </FormControl>
 
+                  <p>Lyka Coin (Including 1% admin fee)</p>
+                  <TextField disabled={true} fullWidth label='Total Lyka' placeholder='Carter' />
 
-                  :
-
-
-                  <MenuItem value='null'>Loading...</MenuItem>
-                
-                }
-              </Select>
-            </FormControl>
-
-            <p>Lyka Coin (Including 1% admin fee)</p>
-            <TextField disabled={true} fullWidth label='Total Lyka' placeholder='Carter' />
-
-            <div style={{ textAlign: 'center', marginTop: 30 }}>
-              <Button onClick={handlePurchaseTopUp} size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
-                Submit
-              </Button>
-            </div>
-          </div>
-        </Card>
-      </Grid>
-    </Grid>
+                  <div style={{ textAlign: 'center', marginTop: 30 }}>
+                    <Button onClick={handlePurchaseTopUp} size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
+                      Submit
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </Grid>
+          </Grid>
+        )
+      )}
+    </>
   )
 }
 
