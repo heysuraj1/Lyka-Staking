@@ -49,6 +49,22 @@ const User = mongoose.Schema(
     Passsword: {
       default: 'null',
       type: 'String'
+    },
+    LeftTeamId: {
+      default: 'null',
+      type: 'String'
+    },
+    RightTeamId: {
+      default: 'null',
+      type: 'String'
+    },
+    LeftTeamName: {
+      default: 'null',
+      type: 'String'
+    },
+    RightTeamName: {
+      default: 'null',
+      type: 'String'
     }
 
   },
@@ -56,4 +72,4 @@ const User = mongoose.Schema(
     timestamps: true
   }
 )
-export default mongoose.models.User || mongoose.model('User', User)
+export default mongoose.models.Userr || mongoose.model('Userr', User)

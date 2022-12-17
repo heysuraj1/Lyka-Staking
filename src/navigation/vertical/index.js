@@ -40,6 +40,11 @@ const navigation = () => {
       icon: AccountCogOutline,
       path: '/DailyBounus'
     },
+    {
+      title: 'Genealogy',
+      icon: AccountCogOutline,
+      path: '/Member/Genealogy'
+    },
     // {
     //   sectionTitle: 'Pages'
     // },
