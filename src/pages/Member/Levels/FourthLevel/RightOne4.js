@@ -2,12 +2,21 @@ import React from 'react'
 import Typography from '@mui/material/Typography'
 
 
-const RightOne4 = () => {
+const RightOne4 = ({datas}) => {
   return (
     <div style={{ textAlign: 'center' }}>
     <img src='https://lykacoin.net/images/0img.png' style={{ width: 80 }} alt='' />
-    <Typography variant='h6'>( Crypto King )</Typography>
-    <Typography variant='h6'>15</Typography>
+    <Typography variant='h6'>{datas.ThirdLevel.Four.RightLine.userName == "null" ? "Vacant" : datas.ThirdLevel.Four.RightLine.userName}</Typography>
+
+    {
+      datas.ThirdLevel.Four.RightLine.userName == "null" ?
+
+      <></>
+      :
+      
+      <Typography variant='h6'>15</Typography>
+    }
+
   </div>
   )
 }

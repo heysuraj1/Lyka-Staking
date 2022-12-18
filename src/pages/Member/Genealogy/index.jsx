@@ -10,7 +10,6 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
-import axios from 'axios'
 import { useState, useEffect } from 'react'
 import SuperUserLevel from '../Levels/SuperUserLevel'
 import LeftLine from '../Levels/SecondLevel/LeftLine'
@@ -27,6 +26,7 @@ import LeftOne3 from '../Levels/FourthLevel/LeftOne3'
 import RightOne3 from '../Levels/FourthLevel/RightOne3'
 import LeftOne4 from '../Levels/FourthLevel/LeftOne4'
 import RightOne4 from '../Levels/FourthLevel/RightOne4'
+import axios from 'axios'
 
 
 
@@ -39,45 +39,80 @@ const MUITable = () => {
   const [showHistoryScreen, setShowHistoryScreen] = useState(null)
   const [TopUpHistory, setTopUpHistory] = useState('')
 
+
+
+  useEffect(() => {
+  
+    try {
+      axios.post("/api/ChartGeograph",{
+        id:"639df3f210c10cd669871497"
+      }).then((acc)=>{
+        console.log(acc.data)
+        setDatas(acc.data)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+  
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <>
+    {
+      datas ? 
+
       <Grid container>
         <Grid item xs={12}>
           <Typography variant='h4'>Member/Genealogy</Typography>
         </Grid>
 
-        <SuperUserLevel />
+        <SuperUserLevel datas={datas} />
 
         <Grid item xs={6}>
-          <LeftLine />
+          <LeftLine datas={datas} />
           <div style={{ marginTop: 30 }}>
             <Grid container>
               <Grid item xs={6}>
-                <ThirdLevelLeft />
+                <ThirdLevelLeft datas={datas} />
                 <div style={{ marginTop: 40 }}>
                   <Grid container>
                     <Grid item xs={6}>
-                      <LeftOne1 />
+                      <LeftOne1 datas={datas}/>
                       <div></div>
                     </Grid>
                     <Grid item xs={6}>
-                      <RightOne1 />
+                      <RightOne1 datas={datas}/>
                       <div></div>
                     </Grid>
                   </Grid>
                 </div>
               </Grid>
               <Grid item xs={6}>
-                <ThirdLevelRight />
+                <ThirdLevelRight datas={datas}/>
                 <div style={{ marginTop: 40 }}>
                   <Grid container>
                     <Grid item xs={6}>
-                      <LeftOne2 />
+                      <LeftOne2 datas={datas}/>
 
                       <div></div>
                     </Grid>
                     <Grid item xs={6}>
-                      <LevelTwo2 />
+                      <LevelTwo2 datas={datas}/>
                       <div></div>
                     </Grid>
                   </Grid>
@@ -88,34 +123,34 @@ const MUITable = () => {
         </Grid>
 
         <Grid item xs={6}>
-          <RightLine />
+          <RightLine datas={datas}/>
           <div style={{ marginTop: 30 }}>
             <Grid container>
               <Grid item xs={6}>
-                <ThirdLevelLeft2 />
+                <ThirdLevelLeft2 datas={datas}/>
                 <div style={{ marginTop: 40 }}>
                   <Grid container>
                     <Grid item xs={6}>
-                      <LeftOne3 />
+                      <LeftOne3 datas={datas}/>
                       <div></div>
                     </Grid>
                     <Grid item xs={6}>
-                      <RightOne3 />
+                      <RightOne3 datas={datas}/>
                       <div></div>
                     </Grid>
                   </Grid>
                 </div>
               </Grid>
               <Grid item xs={6}>
-                <ThirdLevelRight2 />
+                <ThirdLevelRight2 datas={datas}/>
                 <div style={{ marginTop: 40 }}>
                   <Grid container>
                     <Grid item xs={6}>
-                      <LeftOne4 />
+                      <LeftOne4 datas={datas}/>
                       <div></div>
                     </Grid>
                     <Grid item xs={6}>
-                      <RightOne4 />
+                      <RightOne4 datas={datas}/>
                       <div></div>
                     </Grid>
                   </Grid>
@@ -125,6 +160,12 @@ const MUITable = () => {
           </div>
         </Grid>
       </Grid>
+
+      :
+
+
+      <></>
+    }
     </>
   )
 }
