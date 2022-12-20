@@ -5,17 +5,32 @@ import Typography from '@mui/material/Typography'
 const RightOne4 = ({datas}) => {
   return (
     <div style={{ textAlign: 'center' }}>
-    <img src='https://lykacoin.net/images/0img.png' style={{ width: 80 }} alt='' />
-    <Typography variant='h6'>{datas.ThirdLevel.Four.RightLine.userName == "null" ? "Vacant" : datas.ThirdLevel.Four.RightLine.userName}</Typography>
 
-    {
-      datas.ThirdLevel.Four.RightLine.userName == "null" ?
+      {
+        datas ? 
 
-      <></>
-      :
-      
-      <Typography variant='h6'>15</Typography>
-    }
+        <>
+<img src='https://lykacoin.net/images/0img.png' style={{ width: 80 }} alt='' />
+<Typography variant='h6'>{datas.ThirdLevel.Four.RightLine.userName == "null" ? "Vacant" : datas.ThirdLevel.Four.RightLine.userName}</Typography>
+
+{
+  datas.ThirdLevel.Four.RightLine.userName == "null" ?
+
+  <></>
+  :
+  
+  <Typography variant='h6'>15</Typography>
+}
+        
+        </>
+
+
+:
+
+
+
+<></>
+      }
 
   </div>
   )
