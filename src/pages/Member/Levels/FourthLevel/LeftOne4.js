@@ -5,7 +5,11 @@ import Typography from '@mui/material/Typography'
 const leftOne4 = ({datas}) => {
   return (
     <div style={{ textAlign: 'center' }}>
-    <img src='https://lykacoin.net/images/1img.png' style={{ width: 80 }} alt='' />
+      {
+        datas ? 
+
+        <>
+         <img src='https://lykacoin.net/images/1img.png' style={{ width: 80 }} alt='' />
     <Typography variant='h6'>{datas.ThirdLevel.Four.LeftLine.userName == "null" ?  "Vacant" : datas.ThirdLevel.Four.LeftLine.userName}</Typography>
     {
       datas.ThirdLevel.Four.LeftLine.userName == "null" ? 
@@ -13,7 +17,15 @@ const leftOne4 = ({datas}) => {
       :
       <Typography variant='h6'>14</Typography>
 
-    }
+    }</>
+
+
+        :
+
+
+        <></>
+      }
+   
   </div>
   )
 }
