@@ -15,7 +15,7 @@ import { useState, useEffect } from 'react'
 import PackageHistory from './PackageHistory'
 
 const MUITable = () => {
-  const [packageId, setPackageId] = useState('6394c022211b0809e51b74e8')
+  const [packageId, setPackageId] = useState('')
   const [price, setPrice] = useState('')
   const [datas, setDatas] = useState('')
   const [showHistoryScreen, setShowHistoryScreen] = useState(null)
@@ -104,9 +104,10 @@ const MUITable = () => {
                 <CardHeader title='Topup With Lyka Coin (BEP-20)' titleTypographyProps={{ variant: 'h6' }} />
 
                 <div style={{ marginLeft: 100, marginRight: 100, marginBottom: 40, marginTop: 20 }}>
-                  <FormControl fullWidth>
+                  <FormControl  fullWidth>
                     <InputLabel id='form-layouts-separator-select-label'>Select Package</InputLabel>
                     <Select
+                    onChange={(e)=>{setPackageId(e.target.value)}}
                       label='Select Package'
                       defaultValue=''
                       id='form-layouts-separator-select'
@@ -115,7 +116,7 @@ const MUITable = () => {
                       {datas ? (
                         datas.map(acc => {
                           return (
-                            <MenuItem key={acc._id} value={`${acc.PackageName} - ${'$' + acc.PackagePrice}`}>
+                            <MenuItem key={acc._id} value={acc._id}>
                               {acc.PackageName} - ${acc.PackagePrice}
                             </MenuItem>
                           )

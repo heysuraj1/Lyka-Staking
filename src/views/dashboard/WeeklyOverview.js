@@ -7,83 +7,40 @@ import CardHeader from '@mui/material/CardHeader'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-
-// ** Icons Imports
+import axios from 'axios'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
-
-// ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import ProgressBar from '@ramonak/react-progress-bar'
+import { useState, useEffect } from 'react'
 
 const WeeklyOverview = () => {
-  // ** Hook
-  const theme = useTheme()
+  const [percantage, setPercantage] = useState(0)
 
-  const options = {
-    chart: {
-      parentHeightOffset: 0,
-      toolbar: { show: false }
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 9,
-        distributed: true,
-        columnWidth: '40%',
-        endingShape: 'rounded',
-        startingShape: 'rounded'
-      }
-    },
-    stroke: {
-      width: 2,
-      colors: [theme.palette.background.paper]
-    },
-    legend: { show: false },
-    grid: {
-      strokeDashArray: 7,
-      padding: {
-        top: -1,
-        right: 0,
-        left: -12,
-        bottom: 5
-      }
-    },
-    dataLabels: { enabled: false },
-    colors: [
-      theme.palette.background.default,
-      theme.palette.background.default,
-      theme.palette.background.default,
-      theme.palette.primary.main,
-      theme.palette.background.default,
-      theme.palette.background.default
-    ],
-    states: {
-      hover: {
-        filter: { type: 'none' }
-      },
-      active: {
-        filter: { type: 'none' }
-      }
-    },
-    xaxis: {
-      categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      tickPlacement: 'on',
-      labels: { show: false },
-      axisTicks: { show: false },
-      axisBorder: { show: false }
-    },
-    yaxis: {
-      show: true,
-      tickAmount: 4,
-      labels: {
-        offsetX: -17,
-        formatter: value => `${value > 999 ? `${(value / 1000).toFixed(0)}` : value}k`
-      }
+  useEffect(() => {
+    const getData = async () => {
+      const jwt = localStorage.getItem('jwt')
+      const parsedData = JSON.parse(jwt)
+      console.log(parsedData._id)
+
+      axios
+        .post('/api/checkPercantage', {
+          id: parsedData._id
+        })
+        .then(acc => {
+          console.log(acc.data)
+          setPercantage(acc.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
-  }
+    getData()
+  }, [])
 
   return (
     <Card>
       <CardHeader
-        title='Weekly Overview'
+        title='Rank Eligibility'
         titleTypographyProps={{
           sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
         }}
@@ -94,16 +51,9 @@ const WeeklyOverview = () => {
         }
       />
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
-        <ReactApexcharts type='bar' height={205} options={options} series={[{ data: [37, 57, 45, 75, 57, 40, 65] }]} />
-        <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
-          <Typography variant='h5' sx={{ mr: 4 }}>
-            45%
-          </Typography>
-          <Typography variant='body2'>Your sales performance is 45% 😎 better compared to last month</Typography>
-        </Box>
-        <Button fullWidth variant='contained'>
-          Details
-        </Button>
+        <div style={{ paddingBottom: 40, marginTop: 10 }}>
+          <ProgressBar completed={percantage} />
+        </div>
       </CardContent>
     </Card>
   )

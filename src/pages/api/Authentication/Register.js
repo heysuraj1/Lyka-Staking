@@ -21,16 +21,29 @@ export default async (req, res) => {
     if (checkReferalUser.length == 0) {
       return res.status(404).json({ error: 'Referal Id Is Wrong. Please Check It Again.' })
     } else {
+      // console.log(checkReferalUser.LeftTeamId)
+      // console.log(checkReferalUser.RightTeamId)
 
 
-      // var UplineUser = await User.findById(checkReferalUser._id)
+      var chekingUserLeft = checkReferalUser.LeftTeamId
+      var chekingUserRight = checkReferalUser.RightTeamId
+
+      while (chekingUserLeft !== "null") {
+
+        console.log(chekingUserLeft)
+        console.log(chekingUserRight)
 
 
-      // var oldWallete = UplineUser.MainWallet
+        var check1 = await User.findById(chekingUserLeft)
 
-      // var latestWallete = 10 + Number(oldWallete)
-
-      // await User.findByIdAndUpdate({_id:checkReferalUser._id},{MainWallet:latestWallete})
+        if (check1 == null) {
+          console.log("breaking this line ====xxxx=====>")
+          break;
+        }
+        
+        chekingUserLeft = check1.LeftTeamId
+        chekingUserRight = check1.RightTeamId        
+      }
 
     }
   }

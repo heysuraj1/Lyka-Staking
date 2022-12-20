@@ -21,6 +21,10 @@ const ReferalHistory = mongoose.Schema(
     PackageName: {
       require: true,
       type: 'String'
+    },
+    Type: {
+      type: 'String',
+      default:"referal"
     }
   },
   {
