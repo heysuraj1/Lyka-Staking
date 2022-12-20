@@ -1,6 +1,7 @@
 import initDB from '../../helper/initDB'
 import RankEligibilityBonusFill from '../../helper/Modal/Bonus/RankEligibilityBonusFill'
 import PackageHistory from '../../helper/Modal/History/PackageHistory'
+
 initDB()
 
 export default async (req, res) => {

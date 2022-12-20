@@ -9,7 +9,7 @@ export default async (req, res) => {
   var findSuperUser = await User.findById(id)
   var superUserId = findSuperUser.SponserCode
   var superUserName = findSuperUser.FullName
-  //   sides
+  
   var LevelOneRightSideId = findSuperUser.RightTeamId
   var LevelOneLeftSideId = findSuperUser.LeftTeamId
 
