@@ -12,6 +12,8 @@ import DotsVertical from 'mdi-material-ui/DotsVertical'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import ProgressBar from '@ramonak/react-progress-bar'
 import { useState, useEffect } from 'react'
+import Grid from '@mui/material/Grid'
+
 
 const WeeklyOverview = () => {
   const [percantage, setPercantage] = useState(0)
@@ -53,6 +55,17 @@ const WeeklyOverview = () => {
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
         <div style={{ paddingBottom: 40, marginTop: 10 }}>
           <ProgressBar completed={percantage} />
+      <Grid container spacing={6}>
+          <Grid item xs={6}>
+          <p>0</p>
+            </Grid>
+          <Grid item xs={6}>
+          <p style={{textAlign:"right"}}>2500</p>
+            </Grid>
+</Grid>
+
+
+<h2 style={{textAlign:"center",color:"#9357FD"}}>FINISH GOAL & GET 250$</h2>
         </div>
       </CardContent>
     </Card>

@@ -45,6 +45,11 @@ const navigation = () => {
       icon: AccountCogOutline,
       path: '/Member/Genealogy'
     },
+    {
+      title: 'Rank Eligibility',
+      icon: AccountCogOutline,
+      path: '/RankEligibility'
+    },
     // {
     //   sectionTitle: 'Pages'
     // },
