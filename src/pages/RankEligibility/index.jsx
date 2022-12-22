@@ -5,7 +5,6 @@ import Card from '@mui/material/Card'
 import axios from 'axios'
 import WeeklyOverview from '../../views/dashboard/WeeklyOverview'
 
-
 const PackageHistory = () => {
   const [datas, setDatas] = useState('')
   const [buttonDisable, setButtonDisable] = useState(true)
@@ -37,15 +36,7 @@ const PackageHistory = () => {
     }
   }
 
-
-
-  const handleButtonPress = () =>{
-
-
-
-
-
-  }
+  const handleButtonPress = () => {}
 
   return (
     <div>
@@ -54,24 +45,49 @@ const PackageHistory = () => {
           <Typography variant='h4'>Refer Commisions</Typography>
         </Grid>
         <Grid item xs={6}>
-          <Card style={{  }}>
-          <WeeklyOverview />
+          <Card style={{}}>
+            <WeeklyOverview />
           </Card>
         </Grid>
         <Grid item xs={6}>
-          <Card style={{ backgroundColor: 'white', padding: 10 ,paddingBottom:40}}>
-            <div style={{textAlign:"center",marginTop:40}}>
-              <img src="https://cdn-icons-png.flaticon.com/512/726/726461.png" style={{width:130,height:130}} alt="" />
-              {
-                buttonDisable ? 
-
-                <p onClick={handleButtonPress} style={{backgroundColor:"gray",padding:5,marginLeft:100,marginRight:100,fontWeight:"bolder",color:"white",borderRadius:10}}>Claim Reward</p>
-
-                :
-
-
-                <p onClick={handleButtonPress} style={{backgroundColor:"#9357FD",padding:5,marginLeft:100,marginRight:100,fontWeight:"bolder",color:"white",borderRadius:10}}>Claim Reward</p>
-              }
+          <Card style={{ padding: 10, paddingBottom: 40 }}>
+            <div style={{ textAlign: 'center', marginTop: 40 }}>
+              <img
+                src='https://cdn-icons-png.flaticon.com/512/726/726461.png'
+                style={{ width: 130, height: 130 }}
+                alt=''
+              />
+              {buttonDisable ? (
+                <p
+                  onClick={handleButtonPress}
+                  style={{
+                    backgroundColor: 'gray',
+                    padding: 5,
+                    marginLeft: 100,
+                    marginRight: 100,
+                    fontWeight: 'bolder',
+                    color: 'white',
+                    borderRadius: 10
+                  }}
+                >
+                  Claim Reward
+                </p>
+              ) : (
+                <p
+                  onClick={handleButtonPress}
+                  style={{
+                    backgroundColor: '#9357FD',
+                    padding: 5,
+                    marginLeft: 100,
+                    marginRight: 100,
+                    fontWeight: 'bolder',
+                    color: 'white',
+                    borderRadius: 10
+                  }}
+                >
+                  Claim Reward
+                </p>
+              )}
             </div>
           </Card>
         </Grid>

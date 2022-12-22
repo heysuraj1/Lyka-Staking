@@ -1,9 +1,13 @@
+// /api/History/GlobalBonusHis
 import Grid from '@mui/material/Grid'
 import React, { useState, useEffect } from 'react'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import TableBasic from 'src/views/tables/TableBasic'
+
+// table imports
+
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
@@ -17,9 +21,14 @@ const PackageHistory = () => {
 
   const [datas, setDatas] = useState("")
 
+
+
   useEffect(() => {
     getDatas()
   }, [])
+
+
+
 
   const getDatas = () => {
     var data = localStorage.getItem('jwt')
@@ -29,7 +38,7 @@ const PackageHistory = () => {
 
     try {
       axios
-        .post('/api/History/LykaFastBonusHistory', {
+        .post('/api/History/GlobalBonusHis', {
           id: parseData._id
         })
         .then(acc => {
@@ -48,7 +57,7 @@ const PackageHistory = () => {
     <div>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Typography variant='h4'>Fast Bonus</Typography>
+          <Typography variant='h4'>Refer Commisions</Typography>
         </Grid>
 
         <Grid item xs={12}>
@@ -58,10 +67,8 @@ const PackageHistory = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell>S.N.</TableCell>
-                    <TableCell>STAKED PACKAGE</TableCell>
-                    <TableCell align='left'>PERCANTAGE</TableCell>
-                    <TableCell align='left'>AMOUNT</TableCell>
-                    <TableCell align='left'>TIMESTAMP</TableCell>
+                    <TableCell>Coins</TableCell>
+                    <TableCell align='left'>Percantage</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -81,12 +88,8 @@ const PackageHistory = () => {
                   
   
                       <TableCell align='left'>{index+1}</TableCell>
-                      <TableCell align='left'>{hit.FormPackage}</TableCell>
-                      <TableCell align='left'>{hit.PackagePercantage+"%"}</TableCell>
-                      <TableCell align='left'>{Number(hit.Amount).toFixed(2)}</TableCell>
-                      <TableCell align='left'>{hit.createdAt}</TableCell>
-  
-                     
+                      <TableCell align='left'>{hit.Coins}</TableCell>
+                      <TableCell align='left'>{hit.Percantage+"%"}</TableCell>                   
                      
                     </TableRow>
                     })

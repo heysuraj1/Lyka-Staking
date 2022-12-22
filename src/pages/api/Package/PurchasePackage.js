@@ -4,6 +4,7 @@ import PackageHistory from '../../../helper/Modal/History/PackageHistory'
 import ReferralHistory from '../../../helper/Modal/History/ReferralHistory'
 import User from '../../../helper/Modal/User'
 import LykaFastBonus from '../../../helper/Modal/Bonus/LykaFastBonus'
+import GlobalBonus from '../../../helper/Modal/Bonus/GlobalBonus'
 
 initDB()
 
@@ -73,6 +74,14 @@ export default async (req, res) => {
           FastBonusCandidate: uplineUser,
           ReferLength: '1'
         }).save()
+
+        const CreateGlobalBonus = await GlobalBonus({
+          BonusOwner:id,
+          Percantage:"1"
+        }).save()
+
+
+
       }
     }
   }

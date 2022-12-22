@@ -41,6 +41,11 @@ const navigation = () => {
       path: '/DailyBounus'
     },
     {
+      title: 'FastBonus',
+      icon: AccountCogOutline,
+      path: '/FastBonus'
+    },
+    {
       title: 'Genealogy',
       icon: AccountCogOutline,
       path: '/Member/Genealogy'
@@ -49,6 +54,11 @@ const navigation = () => {
       title: 'Rank Eligibility',
       icon: AccountCogOutline,
       path: '/RankEligibility'
+    },
+    {
+      title: 'Global Bonus History',
+      icon: AccountCogOutline,
+      path: '/GlobalBonusHistory'
     },
     // {
     //   sectionTitle: 'Pages'
