@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import axios from 'axios'
-// import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 import WeeklyOverview from '../../views/dashboard/WeeklyOverview'
 
 
@@ -80,4 +79,5 @@ const PackageHistory = () => {
     </div>
   )
 }
+
 export default PackageHistory

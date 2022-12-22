@@ -3,7 +3,7 @@ import PackageHistory from '../../helper/Modal/History/PackageHistory'
 import DailyBonus from '../../helper/Modal/History/DailyBonus'
 import LykaFastBonus from '../../helper/Modal/Bonus/LykaFastBonus'
 import User from '../../helper/Modal/User'
-
+import LykaFastBonusHis from '../../helper/Modal/History/LykaFastBonusHis'
 initDB()
 
 export default async (req, res) => {
@@ -12,7 +12,7 @@ export default async (req, res) => {
   const findPackage = await PackageHistory.find()
 
   findPackage.map(hit => {
-    return list.push({ id: hit.PackageOwner, price: hit.PackagePrice,name:hit.PackageName })
+    return list.push({ id: hit.PackageOwner, price: hit.PackagePrice, name: hit.PackageName })
   })
 
   for (let i = 0; i < list.length; i++) {
@@ -20,18 +20,16 @@ export default async (req, res) => {
 
     const investedAmount = list[i].price
 
-    var findFastBonus = await LykaFastBonus.find({FastBonusCandidate:list[i].id})
+    var findFastBonus = await LykaFastBonus.find({ FastBonusCandidate: list[i].id })
 
     console.log(findFastBonus)
 
     var per = 0.03
 
     if (findFastBonus.length !== 0) {
-
       var totLenght = findFastBonus[0].ReferLength
 
-      per =   Number(totLenght) / 2
-      
+      per = Number(totLenght) / 2
     }
 
     var finalCal = (Number(investedAmount) * per) / 100
@@ -42,13 +40,21 @@ export default async (req, res) => {
 
     await User.findByIdAndUpdate({ _id: list[i].id }, { MainWallet: finalWallete })
 
-    const createRecord = await DailyBonus({
-      BonusOwner:list[i].id,
-      FormPackage:list[i].name,
-      PackagePercantage:per,
-      Amount:finalCal
-    }).save()
-
+    if (findFastBonus.length !== 0) {
+      const createRecord = await LykaFastBonusHis({
+        BonusOwner: list[i].id,
+        FormPackage: list[i].name,
+        PackagePercantage: per,
+        Amount: finalCal
+      }).save()
+    } else {
+      const createRecord = await DailyBonus({
+        BonusOwner: list[i].id,
+        FormPackage: list[i].name,
+        PackagePercantage: per,
+        Amount: finalCal
+      }).save()
+    }
 
     console.log('done')
   }

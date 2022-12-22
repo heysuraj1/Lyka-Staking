@@ -33,7 +33,7 @@ import axios from 'axios'
 const MUITable = () => {
 
   
-  const [packageId, setPackageId] = useState('6394c022211b0809e51b74e8')
+  const [packageId, setPackageId] = useState('63a09f41f5579f410045984c')
   const [price, setPrice] = useState('')
   const [datas, setDatas] = useState('')
   const [showHistoryScreen, setShowHistoryScreen] = useState(null)
@@ -45,7 +45,7 @@ const MUITable = () => {
   
     try {
       axios.post("/api/ChartGeograph",{
-        id:"639df3f210c10cd669871497"
+        id:"63a09f41f5579f410045984c"
       }).then((acc)=>{
         console.log(acc.data)
         setDatas(acc.data)

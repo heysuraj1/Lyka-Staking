@@ -7,6 +7,8 @@ export default async (req, res) => {
   const { id } = req.body
 
   var findSuperUser = await User.findById(id)
+
+  console.log(findSuperUser)
   var superUserId = findSuperUser.SponserCode
   var superUserName = findSuperUser.FullName
   

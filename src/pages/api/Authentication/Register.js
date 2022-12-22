@@ -1,6 +1,6 @@
-import User from "../../../helper/Modal/User";
-import initDB from "../../../helper/initDB";
-import bcrypt from "bcrypt";
+import User from '../../../helper/Modal/User'
+import initDB from '../../../helper/initDB'
+import bcrypt from 'bcrypt'
 
 initDB()
 
@@ -8,7 +8,7 @@ export default async (req, res) => {
   const { FullName, Position, Country, ContactNumber, EmailId, UpperlineUser, Passsword } = req.body
   console.log(UpperlineUser)
 
-  if (!FullName|| !Position|| !Country|| !ContactNumber|| !EmailId|| !Passsword) {
+  if (!FullName || !Position || !Country || !ContactNumber || !EmailId || !Passsword) {
     return res.status(404).json({ error: 'You Have Not Provided All The Informations' })
   }
 
@@ -24,27 +24,23 @@ export default async (req, res) => {
       // console.log(checkReferalUser.LeftTeamId)
       // console.log(checkReferalUser.RightTeamId)
 
-
       var chekingUserLeft = checkReferalUser.LeftTeamId
       var chekingUserRight = checkReferalUser.RightTeamId
 
-      while (chekingUserLeft !== "null") {
-
+      while (chekingUserLeft !== 'null') {
         console.log(chekingUserLeft)
         console.log(chekingUserRight)
-
 
         var check1 = await User.findById(chekingUserLeft)
 
         if (check1 == null) {
-          console.log("breaking this line ====xxxx=====>")
-          break;
+          console.log('breaking this line ====xxxx=====>')
+          break
         }
-        
-        chekingUserLeft = check1.LeftTeamId
-        chekingUserRight = check1.RightTeamId        
-      }
 
+        chekingUserLeft = check1.LeftTeamId
+        chekingUserRight = check1.RightTeamId
+      }
     }
   }
 
@@ -63,7 +59,7 @@ export default async (req, res) => {
   }
 
   const generatedUserName = randValue
-  var generateUserN = FullName.slice(0,3)
+  var generateUserN = FullName.slice(0, 3)
 
   var today = new Date()
   var dd = String(today.getDate()).padStart(2, '0')
@@ -73,26 +69,26 @@ export default async (req, res) => {
 
   if (UpperlineUser) {
     var CreateUser = await User({
-    FullName,
-    Position,
-    Country,
-    ContactNumber,
-    EmailId,
-    UpperlineUser: checkReferalUser._id,
-    Passsword:hashedPassowd,
-    SponserCode:generatedUserName,
-    UserName:generateUserN+randValue2
+      FullName,
+      Position,
+      Country,
+      ContactNumber,
+      EmailId,
+      UpperlineUser: checkReferalUser._id,
+      Passsword: hashedPassowd,
+      SponserCode: generatedUserName,
+      UserName: generateUserN + randValue2
     }).save()
   } else {
     var CreateUser = await User({
-    FullName,
-    Position,
-    Country,
-    ContactNumber,
-    EmailId,
-    Passsword:hashedPassowd,
-    SponserCode:generatedUserName,
-    UserName:generateUserN+randValue2
+      FullName,
+      Position,
+      Country,
+      ContactNumber,
+      EmailId,
+      Passsword: hashedPassowd,
+      SponserCode: generatedUserName,
+      UserName: generateUserN + randValue2
     }).save()
   }
 
