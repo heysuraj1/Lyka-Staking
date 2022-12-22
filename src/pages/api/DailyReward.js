@@ -4,6 +4,7 @@ import DailyBonus from '../../helper/Modal/History/DailyBonus'
 import LykaFastBonus from '../../helper/Modal/Bonus/LykaFastBonus'
 import User from '../../helper/Modal/User'
 import LykaFastBonusHis from '../../helper/Modal/History/LykaFastBonusHis'
+
 initDB()
 
 export default async (req, res) => {
