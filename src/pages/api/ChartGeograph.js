@@ -8,7 +8,6 @@ export default async (req, res) => {
 
   var findSuperUser = await User.findById(id)
 
-
   var superUserId = findSuperUser.SponserCode == "null" ? null : findSuperUser.SponserCode
   var superUserName = findSuperUser.FullName == "null" ? null : findSuperUser.FullName
   
