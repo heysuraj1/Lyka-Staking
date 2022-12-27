@@ -24,6 +24,8 @@ export default async (req, res) => {
       // console.log(checkReferalUser.LeftTeamId)
       // console.log(checkReferalUser.RightTeamId)
 
+
+
       var chekingUserLeft = checkReferalUser.LeftTeamId
       var chekingUserRight = checkReferalUser.RightTeamId
 
@@ -32,9 +34,27 @@ export default async (req, res) => {
         console.log(chekingUserRight)
 
         var check1 = await User.findById(chekingUserLeft)
+        var check2 = await User.findById(chekingUserRight)
 
-        if (check1 == null) {
+        if (check1 == null && check2 == null) {
           console.log('breaking this line ====xxxx=====>')
+          break
+        }
+        
+        
+        
+        if (check1 == null) {
+          
+          console.log("updtaed left")
+
+          break
+          
+        }
+        
+        
+        if (check2 == null) {
+          
+          console.log("updtaed right")
           break
         }
 
