@@ -72,4 +72,5 @@ const User = mongoose.Schema(
     timestamps: true
   }
 )
+
 export default mongoose.models.Userr || mongoose.model('Userr', User)
