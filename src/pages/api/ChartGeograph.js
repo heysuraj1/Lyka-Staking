@@ -10,7 +10,7 @@ export default async (req, res) => {
 
   var superUserId = findSuperUser.SponserCode == "null" ? null : findSuperUser.SponserCode
   var superUserName = findSuperUser.FullName == "null" ? null : findSuperUser.FullName
-  
+
   var LevelOneRightSideId = findSuperUser.RightTeamId == "null" ? "null" : findSuperUser.RightTeamId
   var LevelOneLeftSideId = findSuperUser.LeftTeamId == "null" ? "null" : findSuperUser.LeftTeamId
 
@@ -34,14 +34,13 @@ export default async (req, res) => {
     LevelOneLeftSideUser = 'null'
   }
 
-  // Second Step Line
 
-  
+
+
   if (LevelOneLeftSideUser !== 'null') {
     if (LevelOneLeftSideUser.LeftTeamId !== 'null') {
       const fName = await User.findById(LevelOneLeftSideUser.LeftTeamId)
       var leftSideId1 = fName.FullName
-      // console.log("left left ==> "+fName.FullName)
     } else {
       leftSideId1 = 'null'
     }
@@ -49,11 +48,11 @@ export default async (req, res) => {
     if (LevelOneLeftSideUser.RightTeamId !== 'null') {
       const f2Name = await User.findById(LevelOneLeftSideUser.RightTeamId)
       var RightSideId2 = f2Name.FullName
-      // console.log("left right ==> "+f2Name.FullName)
+      
     } else {
       RightSideId2 = 'null'
     }
-   
+
 
     var leftSideName1 = LevelOneLeftSideUser.LeftTeamName
     var RightSideName2 = LevelOneLeftSideUser.RightTeamName
@@ -94,19 +93,19 @@ export default async (req, res) => {
   // Third Step Line
 
 
-  if (LevelOneLeftSideUser.LeftTeamId !== 'null' && LevelOneLeftSideUser.LeftTeamId !== undefined) { 
-    // console.log("the left team id is ==> "+LevelOneLeftSideUser.LeftTeamId) 
+  if (LevelOneLeftSideUser.LeftTeamId !== 'null' && LevelOneLeftSideUser.LeftTeamId !== undefined) {
+   
 
     var fUserData1 = await User.findById(LevelOneLeftSideUser.LeftTeamId)
-    // console.log("hey hey ==> "+fUserData1)
-    
+ 
+
     if (fUserData1.LeftTeamId !== "null") {
 
       var firstLeftKaLeftName = "null"
       var firstLeftKaLeftSponser = "null"
-      
+
       var againLeftUpper = await User.findById(fUserData1.LeftTeamId)
-      // console.log("left one is ==> "+againLeftUpper.FullName)
+      
       firstLeftKaLeftName = againLeftUpper.FullName
       firstLeftKaLeftSponser = againLeftUpper.SponserCode
     }
@@ -114,16 +113,16 @@ export default async (req, res) => {
 
     var firstLeftKaRightName = "null"
     var firstLeftKaRightSponser = "null"
-    
+
     if (fUserData1.RightTeamId !== "null") {
       var againRightUpper = await User.findById(fUserData1.RightTeamId)
-      // console.log("right one is ==> "+againRightUpper.FullName)
+     
 
       firstLeftKaRightName = againRightUpper.FullName
       firstLeftKaRightSponser = againRightUpper.SponserCode
-      
+
     }
-    
+
 
 
 
@@ -131,7 +130,7 @@ export default async (req, res) => {
 
 
     var OneLeftLineName = fUserData1.LeftTeamName
-    // console.log(OneLeftLineName)
+    
 
 
 
@@ -156,7 +155,6 @@ export default async (req, res) => {
     var fUserData2 = await User.findById(LevelOneLeftSideUser.RightTeamId)
 
 
-    // console.log(fUserData2)
 
 
 
@@ -164,9 +162,9 @@ export default async (req, res) => {
 
       var SecLeftKaLeftName = "null"
       var SecLeftKaLeftSponser = "null"
-      
+
       var againLeftUpper = await User.findById(fUserData2.LeftTeamId)
-      // console.log("left one is ==> "+againLeftUpper.FullName)
+      
       SecLeftKaLeftName = againLeftUpper.FullName
       SecLeftKaLeftSponser = againLeftUpper.SponserCode
     }
@@ -174,22 +172,23 @@ export default async (req, res) => {
 
     var SecLeftKaRightName = "null"
     var SecLeftKaRightSponser = "null"
-    
+
     if (fUserData2.RightTeamId !== "null") {
       var againRightUpper = await User.findById(fUserData2.RightTeamId)
-      // console.log("right one is ==> "+againRightUpper.FullName)
+      
+      
 
       SecLeftKaRightName = againRightUpper.FullName
       SecLeftKaRightSponser = againRightUpper.SponserCode
-      
+
     }
 
 
-    
 
 
 
-    
+
+
     var TwoLeftLineName = fUserData2.LeftTeamName
     var TwoLeftLineId = fUserData2.SponserCode
 
@@ -218,9 +217,9 @@ export default async (req, res) => {
 
     if (fUserData3.LeftTeamId !== "null") {
 
-      
+
       var againLeftUpper = await User.findById(fUserData3.LeftTeamId)
-      // console.log("left one is ==> "+againLeftUpper.FullName)
+      
       ThirdLeftKaLeftName = againLeftUpper.FullName
       ThirdLeftKaLeftSponser = againLeftUpper.SponserCode
     }
@@ -228,14 +227,14 @@ export default async (req, res) => {
 
     var ThirdLeftKaRightName = "null"
     var ThirdLeftKaRightSponser = "null"
-    
+
     if (fUserData3.RightTeamId !== "null") {
       var againRightUpper = await User.findById(fUserData3.RightTeamId)
-      // console.log("right one is ==> "+againRightUpper.FullName)
+      
 
       ThirdLeftKaRightName = againRightUpper.FullName
       ThirdLeftKaRightSponser = againRightUpper.SponserCode
-      
+
     }
 
 
@@ -268,12 +267,12 @@ export default async (req, res) => {
 
     var FourLeftKaLeftName = "null"
     var FourLeftKaLeftSponser = "null"
-    
+
     if (fUserData4.LeftTeamId !== "null") {
 
-      
+
       var againLeftUpper = await User.findById(fUserData4.LeftTeamId)
-      // console.log("left one is ==> "+againLeftUpper.FullName)
+      
       FourLeftKaLeftName = againLeftUpper.FullName
       FourLeftKaLeftSponser = againLeftUpper.SponserCode
     }
@@ -281,14 +280,14 @@ export default async (req, res) => {
 
     var FourLeftKaRightName = "null"
     var FourLeftKaRightSponser = "null"
-    
+
     if (fUserData4.RightTeamId !== "null") {
       var againRightUpper = await User.findById(fUserData4.RightTeamId)
-      // console.log("right one is ==> "+againRightUpper.FullName)
+    
 
       FourLeftKaRightName = againRightUpper.FullName
       FourLeftKaRightSponser = againRightUpper.SponserCode
-      
+
     }
 
 
