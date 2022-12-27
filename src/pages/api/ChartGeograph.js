@@ -8,9 +8,7 @@ export default async (req, res) => {
 
   var findSuperUser = await User.findById(id)
 
-  
 
-  console.log(findSuperUser)
   var superUserId = findSuperUser.SponserCode == "null" ? null : findSuperUser.SponserCode
   var superUserName = findSuperUser.FullName == "null" ? null : findSuperUser.FullName
   
@@ -39,24 +37,27 @@ export default async (req, res) => {
 
   // Second Step Line
 
-  console.log('This ===> ' + LevelOneRightSideUser)
-  if (LevelOneRightSideUser !== 'null') {
-    if (LevelOneRightSideUser.LeftTeamId !== 'null') {
-      const fName = await User.findById(LevelOneRightSideUser.LeftTeamId)
+  
+  if (LevelOneLeftSideUser !== 'null') {
+    if (LevelOneLeftSideUser.LeftTeamId !== 'null') {
+      const fName = await User.findById(LevelOneLeftSideUser.LeftTeamId)
       var leftSideId1 = fName.FullName
+      console.log("left left ==> "+fName.FullName)
     } else {
       leftSideId1 = 'null'
     }
 
-    if (LevelOneRightSideUser.RightTeamId !== 'null') {
-      const f2Name = await User.findById(LevelOneRightSideUser.RightTeamId)
+    if (LevelOneLeftSideUser.RightTeamId !== 'null') {
+      const f2Name = await User.findById(LevelOneLeftSideUser.RightTeamId)
       var RightSideId2 = f2Name.FullName
+      console.log("left right ==> "+f2Name.FullName)
     } else {
       RightSideId2 = 'null'
     }
+   
 
-    var leftSideName1 = LevelOneRightSideUser.LeftTeamName
-    var RightSideName2 = LevelOneRightSideUser.RightTeamName
+    var leftSideName1 = LevelOneLeftSideUser.LeftTeamName
+    var RightSideName2 = LevelOneLeftSideUser.RightTeamName
   } else {
     leftSideName1 = 'null'
     leftSideId1 = 'null'
@@ -64,9 +65,9 @@ export default async (req, res) => {
     RightSideId2 = 'null'
   }
 
-  if (LevelOneLeftSideUser !== 'null') {
-    if (LevelOneLeftSideUser.LeftTeamId !== 'null') {
-      const fName = await User.findById(LevelOneLeftSideUser.LeftTeamId)
+  if (LevelOneRightSideUser !== 'null') {
+    if (LevelOneRightSideUser.LeftTeamId !== 'null') {
+      const fName = await User.findById(LevelOneRightSideUser.LeftTeamId)
 
       var AnotherLeftSideName2 = fName.RightTeamName
       var AnotherLeftSideId = fName.FullName
@@ -75,8 +76,8 @@ export default async (req, res) => {
       AnotherLeftSideId = 'null'
     }
 
-    if (LevelOneLeftSideUser.RightTeamId !== 'null') {
-      const f2Name = await User.findById(LevelOneLeftSideUser.RightTeamId)
+    if (LevelOneRightSideUser.RightTeamId !== 'null') {
+      const f2Name = await User.findById(LevelOneRightSideUser.RightTeamId)
 
       var AnotherRightSideId = f2Name.FullName
       var AnotherRightSideName = f2Name.LeftTeamName
@@ -99,7 +100,7 @@ export default async (req, res) => {
   // LevelOneLeftSideUser.RightTeamId
 
   if (LevelOneRightSideUser.LeftTeamId !== 'null' && LevelOneRightSideUser.LeftTeamId !== undefined) {
-    console.log('this ===> ' + LevelOneRightSideUser.LeftTeamId)
+  
 
     var fUserData1 = await User.findById(LevelOneRightSideUser.LeftTeamId)
     var OneLeftLineName = fUserData1.LeftTeamName
