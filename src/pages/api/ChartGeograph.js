@@ -41,7 +41,7 @@ export default async (req, res) => {
     if (LevelOneLeftSideUser.LeftTeamId !== 'null') {
       const fName = await User.findById(LevelOneLeftSideUser.LeftTeamId)
       var leftSideId1 = fName.FullName
-      console.log("left left ==> "+fName.FullName)
+      // console.log("left left ==> "+fName.FullName)
     } else {
       leftSideId1 = 'null'
     }
@@ -49,7 +49,7 @@ export default async (req, res) => {
     if (LevelOneLeftSideUser.RightTeamId !== 'null') {
       const f2Name = await User.findById(LevelOneLeftSideUser.RightTeamId)
       var RightSideId2 = f2Name.FullName
-      console.log("left right ==> "+f2Name.FullName)
+      // console.log("left right ==> "+f2Name.FullName)
     } else {
       RightSideId2 = 'null'
     }
@@ -93,17 +93,54 @@ export default async (req, res) => {
 
   // Third Step Line
 
-  // LevelOneRightSideUser.LeftTeamId
-  // LevelOneRightSideUser.RightTeamId
-  // LevelOneLeftSideUser.LeftTeamId
-  // LevelOneLeftSideUser.RightTeamId
 
-  if (LevelOneRightSideUser.LeftTeamId !== 'null' && LevelOneRightSideUser.LeftTeamId !== undefined) {
-  
+  if (LevelOneLeftSideUser.LeftTeamId !== 'null' && LevelOneLeftSideUser.LeftTeamId !== undefined) { 
+    // console.log("the left team id is ==> "+LevelOneLeftSideUser.LeftTeamId) 
 
-    var fUserData1 = await User.findById(LevelOneRightSideUser.LeftTeamId)
+    var fUserData1 = await User.findById(LevelOneLeftSideUser.LeftTeamId)
+    // console.log("hey hey ==> "+fUserData1)
+    
+    if (fUserData1.LeftTeamId !== "null") {
+
+      var firstLeftKaLeftName = "null"
+      var firstLeftKaLeftSponser = "null"
+      
+      var againLeftUpper = await User.findById(fUserData1.LeftTeamId)
+      // console.log("left one is ==> "+againLeftUpper.FullName)
+      firstLeftKaLeftName = againLeftUpper.FullName
+      firstLeftKaLeftSponser = againLeftUpper.SponserCode
+    }
+
+
+    var firstLeftKaRightName = "null"
+    var firstLeftKaRightSponser = "null"
+    
+    if (fUserData1.RightTeamId !== "null") {
+      var againRightUpper = await User.findById(fUserData1.RightTeamId)
+      // console.log("right one is ==> "+againRightUpper.FullName)
+
+      firstLeftKaRightName = againRightUpper.FullName
+      firstLeftKaRightSponser = againRightUpper.SponserCode
+      
+    }
+    
+
+
+
+
+
+
     var OneLeftLineName = fUserData1.LeftTeamName
-    var OneLeftLineId = fUserData1.SponserCode
+    // console.log(OneLeftLineName)
+
+
+
+
+
+
+
+
+    var OneLeftLineId = fUserData1.LeftTeamId
 
     var OneRightLineName = fUserData1.RightTeamName
     var OneRightLineId = fUserData1.RightTeamId
@@ -114,8 +151,45 @@ export default async (req, res) => {
     OneRightLineId = 'null'
   }
 
-  if (LevelOneRightSideUser.RightTeamId !== 'null' && LevelOneRightSideUser.RightTeamId !== undefined) {
-    var fUserData2 = await User.findById(LevelOneRightSideUser.RightTeamId)
+
+  if (LevelOneLeftSideUser.RightTeamId !== 'null' && LevelOneLeftSideUser.RightTeamId !== undefined) {
+    var fUserData2 = await User.findById(LevelOneLeftSideUser.RightTeamId)
+
+
+    // console.log(fUserData2)
+
+
+
+    if (fUserData2.LeftTeamId !== "null") {
+
+      var SecLeftKaLeftName = "null"
+      var SecLeftKaLeftSponser = "null"
+      
+      var againLeftUpper = await User.findById(fUserData2.LeftTeamId)
+      // console.log("left one is ==> "+againLeftUpper.FullName)
+      SecLeftKaLeftName = againLeftUpper.FullName
+      SecLeftKaLeftSponser = againLeftUpper.SponserCode
+    }
+
+
+    var SecLeftKaRightName = "null"
+    var SecLeftKaRightSponser = "null"
+    
+    if (fUserData2.RightTeamId !== "null") {
+      var againRightUpper = await User.findById(fUserData2.RightTeamId)
+      // console.log("right one is ==> "+againRightUpper.FullName)
+
+      SecLeftKaRightName = againRightUpper.FullName
+      SecLeftKaRightSponser = againRightUpper.SponserCode
+      
+    }
+
+
+    
+
+
+
+    
     var TwoLeftLineName = fUserData2.LeftTeamName
     var TwoLeftLineId = fUserData2.SponserCode
 
@@ -128,8 +202,53 @@ export default async (req, res) => {
     TwoRightLineId = 'null'
   }
 
-  if (LevelOneLeftSideUser.LeftTeamId !== 'null' && LevelOneLeftSideUser.LeftTeamId !== undefined) {
-    var fUserData3 = await User.findById(LevelOneLeftSideUser.LeftTeamId)
+
+
+
+
+  if (LevelOneRightSideUser.LeftTeamId !== 'null' && LevelOneRightSideUser.LeftTeamId !== undefined) {
+    var fUserData3 = await User.findById(LevelOneRightSideUser.LeftTeamId)
+
+
+
+
+
+    var ThirdLeftKaLeftName = "null"
+    var ThirdLeftKaLeftSponser = "null"
+
+    if (fUserData3.LeftTeamId !== "null") {
+
+      
+      var againLeftUpper = await User.findById(fUserData3.LeftTeamId)
+      // console.log("left one is ==> "+againLeftUpper.FullName)
+      ThirdLeftKaLeftName = againLeftUpper.FullName
+      ThirdLeftKaLeftSponser = againLeftUpper.SponserCode
+    }
+
+
+    var ThirdLeftKaRightName = "null"
+    var ThirdLeftKaRightSponser = "null"
+    
+    if (fUserData3.RightTeamId !== "null") {
+      var againRightUpper = await User.findById(fUserData3.RightTeamId)
+      // console.log("right one is ==> "+againRightUpper.FullName)
+
+      ThirdLeftKaRightName = againRightUpper.FullName
+      ThirdLeftKaRightSponser = againRightUpper.SponserCode
+      
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     var ThreeLeftLineName = fUserData3.LeftTeamName
     var ThreeLeftLineId = fUserData3.SponserCode
 
@@ -142,8 +261,40 @@ export default async (req, res) => {
     ThreeRightLineId = 'null'
   }
 
-  if (LevelOneLeftSideUser.RightTeamId !== 'null' && LevelOneLeftSideUser.RightTeamId !== undefined) {
-    var fUserData4 = await User.findById(LevelOneLeftSideUser.RightTeamId)
+
+
+  if (LevelOneRightSideUser.RightTeamId !== 'null' && LevelOneRightSideUser.RightTeamId !== undefined) {
+    var fUserData4 = await User.findById(LevelOneRightSideUser.RightTeamId)
+
+    var FourLeftKaLeftName = "null"
+    var FourLeftKaLeftSponser = "null"
+    
+    if (fUserData4.LeftTeamId !== "null") {
+
+      
+      var againLeftUpper = await User.findById(fUserData4.LeftTeamId)
+      // console.log("left one is ==> "+againLeftUpper.FullName)
+      FourLeftKaLeftName = againLeftUpper.FullName
+      FourLeftKaLeftSponser = againLeftUpper.SponserCode
+    }
+
+
+    var FourLeftKaRightName = "null"
+    var FourLeftKaRightSponser = "null"
+    
+    if (fUserData4.RightTeamId !== "null") {
+      var againRightUpper = await User.findById(fUserData4.RightTeamId)
+      // console.log("right one is ==> "+againRightUpper.FullName)
+
+      FourLeftKaRightName = againRightUpper.FullName
+      FourLeftKaRightSponser = againRightUpper.SponserCode
+      
+    }
+
+
+
+
+
     var FourLeftLineName = fUserData4.LeftTeamName
     var FourLeftLineId = fUserData4.SponserCode
 
@@ -155,6 +306,19 @@ export default async (req, res) => {
     FourRightLineName = 'null'
     FourRightLineId = 'null'
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   res.json({
     SuperUser: {
@@ -196,42 +360,42 @@ export default async (req, res) => {
     ThirdLevel: {
       One: {
         LeftLine: {
-          id: OneLeftLineId,
-          userName: OneLeftLineName
+          id: firstLeftKaLeftSponser,
+          userName: firstLeftKaLeftName
         },
         RightLine: {
-          id: OneRightLineId,
-          userName: OneRightLineName
+          id: firstLeftKaRightSponser,
+          userName: firstLeftKaRightName
         }
       },
       Two: {
         LeftLine: {
-          id: TwoLeftLineId,
-          userName: TwoLeftLineName
+          id: SecLeftKaLeftSponser,
+          userName: SecLeftKaLeftName
         },
         RightLine: {
-          id: TwoRightLineId,
-          userName: TwoRightLineName
+          id: SecLeftKaRightSponser,
+          userName: SecLeftKaRightName
         }
       },
       Three: {
         LeftLine: {
-          id: ThreeLeftLineId,
-          userName: ThreeLeftLineName
+          id: ThirdLeftKaLeftSponser,
+          userName: ThirdLeftKaLeftName
         },
         RightLine: {
-          id: ThreeRightLineId,
-          userName: ThreeRightLineName
+          id: ThirdLeftKaRightSponser,
+          userName: ThirdLeftKaRightName
         }
       },
       Four: {
         LeftLine: {
-          id: FourLeftLineId,
-          userName: FourLeftLineName
+          id: FourLeftKaLeftSponser,
+          userName: FourLeftKaLeftName
         },
         RightLine: {
-          id: FourRightLineId,
-          userName: FourRightLineName
+          id: FourLeftKaRightSponser,
+          userName: FourLeftKaRightName
         }
       }
     }
