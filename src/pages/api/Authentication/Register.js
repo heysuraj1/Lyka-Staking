@@ -12,8 +12,10 @@ export default async (req, res) => {
     return res.status(404).json({ error: 'You Have Not Provided All The Informations' })
   }
 
+  let checkReferalUser;
+
   if (UpperlineUser) {
-    var checkReferalUser = await User.findOne({ SponserCode: UpperlineUser })
+    checkReferalUser = await User.findOne({ SponserCode: UpperlineUser })
     if (!checkReferalUser) {
       return res.status(404).json({ error: 'Referal Id Is Wrong. Please Check It Again.' })
     }
@@ -23,46 +25,41 @@ export default async (req, res) => {
     } else {
       // console.log(checkReferalUser.LeftTeamId)
       // console.log(checkReferalUser.RightTeamId)
+      let currentChildId = Position === "Left" ? checkReferalUser.LeftTeamId : checkReferalUser.RightTeamId;
 
+      console.log("iniChilID", currentChildId);
 
+      while(currentChildId !== "null") {
+        const currentChildNode = await User.findById(currentChildId);
 
-      var chekingUserLeft = checkReferalUser.LeftTeamId
-      var chekingUserRight = checkReferalUser.RightTeamId
+        console.log(currentChildNode);
 
-      while (chekingUserLeft !== 'null') {
-        console.log(chekingUserLeft)
-        console.log(chekingUserRight)
-
-        var check1 = await User.findById(chekingUserLeft)
-        var check2 = await User.findById(chekingUserRight)
-
-        if (check1 == null && check2 == null) {
-          console.log('breaking this line ====xxxx=====>')
-          break
-        }
-        
-        
-        
-        if (check1 == null) {
-          
-          console.log("updtaed left")
-
-          break
-          
-        }
-        
-        
-        if (check2 == null) {
-          
-          console.log("updtaed right")
-          break
-        }
-
-        chekingUserLeft = check1.LeftTeamId
-        chekingUserRight = check1.RightTeamId
+        checkReferalUser = currentChildNode;
+        currentChildId = Position === "Left" ? checkReferalUser.LeftTeamId : checkReferalUser.RightTeamId;
       }
+
+    //   let chekingUserLeft = checkReferalUser.LeftTeamId
+    //   let chekingUserRight = checkReferalUser.RightTeamId
+
+    //   while (chekingUserLeft !== 'null') {
+    //     console.log(chekingUserLeft)
+    //     console.log(chekingUserRight)
+
+    //     var check1 = await User.findById(chekingUserLeft)
+
+    //     if (check1 == null) {
+    //       console.log('breaking this line ====xxxx=====>')
+    //       break
+    //     }
+
+    //     chekingUserLeft = check1.LeftTeamId
+    //     chekingUserRight = check1.RightTeamId
+    //   }
+    // }
     }
   }
+
+  console.log(checkReferalUser);
 
   const hashedPassowd = await bcrypt.hash(Passsword, 12)
 
@@ -99,6 +96,30 @@ export default async (req, res) => {
       SponserCode: generatedUserName,
       UserName: generateUserN + randValue2
     }).save()
+
+    console.log(CreateUser);
+
+    if(checkReferalUser && Position === "Left") {
+      const updatedCheckReferalUser = {
+        LeftTeamId: CreateUser._id
+      }
+      await User.findByIdAndUpdate(checkReferalUser, {
+        $set: updatedCheckReferalUser
+      }, {
+        new: true
+      })
+    }
+
+    else if(checkReferalUser && Position === "Right"){
+      const updatedCheckReferalUser = {
+        RightTeamId: CreateUser._id
+      }
+      await User.findByIdAndUpdate(checkReferalUser, {
+        $set: updatedCheckReferalUser
+      }, {
+        new: true
+      })
+    }
   } else {
     var CreateUser = await User({
       FullName,
