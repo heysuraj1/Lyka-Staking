@@ -49,8 +49,7 @@ const MUITable = () => {
   
       console.log("the id is ==> "+parseData._id)
         axios.post("/api/ChartGeograph",{
-          id:"63ab2b75650f1236cc40fd9a"
-          // id:parseData._id
+          id:parseData._id
         }).then((acc)=>{
           console.log(acc.data)
           setDatas(acc.data)
