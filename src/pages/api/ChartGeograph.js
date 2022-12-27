@@ -8,12 +8,14 @@ export default async (req, res) => {
 
   var findSuperUser = await User.findById(id)
 
-  console.log(findSuperUser)
-  var superUserId = findSuperUser.SponserCode
-  var superUserName = findSuperUser.FullName
   
-  var LevelOneRightSideId = findSuperUser.RightTeamId
-  var LevelOneLeftSideId = findSuperUser.LeftTeamId
+
+  console.log(findSuperUser)
+  var superUserId = findSuperUser.SponserCode == "null" ? null : findSuperUser.SponserCode
+  var superUserName = findSuperUser.FullName == "null" ? null : findSuperUser.FullName
+  
+  var LevelOneRightSideId = findSuperUser.RightTeamId == "null" ? "null" : findSuperUser.RightTeamId
+  var LevelOneLeftSideId = findSuperUser.LeftTeamId == "null" ? "null" : findSuperUser.LeftTeamId
 
   if (LevelOneRightSideId !== 'null') {
     var LevelOneRightSideUser = await User.findById(LevelOneRightSideId)

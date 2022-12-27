@@ -42,24 +42,33 @@ const MUITable = () => {
 
 
   useEffect(() => {
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+
+
+      const getUser = localStorage.getItem("jwt")
+      const parseData = JSON.parse(getUser)
   
-    try {
-      axios.post("/api/ChartGeograph",{
-        id:"63a09f41f5579f410045984c"
-      }).then((acc)=>{
-        console.log(acc.data)
-        setDatas(acc.data)
-      })
-      .catch((err)=>{
-        console.log(err)
-      })
-      
-    } catch (error) {
-      console.log(error)
+      console.log("the id is ==> "+parseData._id)
+    
+    
+        axios.post("/api/ChartGeograph",{
+          id:parseData._id
+        }).then((acc)=>{
+          console.log(acc.data)
+          setDatas(acc.data)
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+
+
     }
+   
+    
+    
   }, [])
   
-
+  
 
 
 
