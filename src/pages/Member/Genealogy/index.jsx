@@ -26,6 +26,7 @@ import RightOne3 from '../Levels/FourthLevel/RightOne3'
 import LeftOne4 from '../Levels/FourthLevel/LeftOne4'
 import RightOne4 from '../Levels/FourthLevel/RightOne4'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
 
 
@@ -40,17 +41,14 @@ const MUITable = () => {
   const [idName, setIdName] = useState("")
 
 
+  const router = useRouter()
 
   useEffect(() => {
-    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-
-      const getUser = localStorage.getItem("jwt")
-      const parseData = JSON.parse(getUser)
+    if(!router.isReady) return;
+   
 
       axios.post("/api/ChartGeograph", {
-        // id: "63ab2b75650f1236cc40fd9a"
-        // id: parseData._id
-        id: parseData.SponserCode
+        id: router.query.id
       }).then((acc) => {
         console.log(acc.data)
         setDatas(acc.data)
@@ -58,39 +56,9 @@ const MUITable = () => {
         .catch((err) => {
           console.log(err)
         })
-    }
-  }, [])
 
+  }, [router.isReady])
 
-
-  const updateData = ({itm}) => {
-
-
-
-    console.log(itm)
-
-    const getUser = localStorage.getItem("jwt")
-    const parseData = JSON.parse(getUser)
-
-
-    axios.post("/api/ChartGeograph", {
-      // id: "63ab2b75650f1236cc40fd9a"
-      // id: parseData._id
-      id: idName
-    }).then((acc) => {
-      console.log(acc.data)
-      setDatas(acc.data)
-    })
-      .catch((err) => {
-        console.log(err)
-      })
-
-
-
-
-
-
-  }
 
   return (
     <>
@@ -102,7 +70,7 @@ const MUITable = () => {
               <Typography variant='h4'>Member/Genealogy</Typography>
             </Grid>
 
-            <SuperUserLevel updateData={updateData} datas={datas} />
+            <SuperUserLevel datas={datas} />
             <Grid item xs={12}>
               <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
                 <img className="center" src="/lines.png" alt="" />

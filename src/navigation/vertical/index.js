@@ -1,4 +1,4 @@
-// ** Icon imports
+import React,{useState,useEffect} from 'react'
 import Login from 'mdi-material-ui/Login'
 import Table from 'mdi-material-ui/Table'
 import CubeOutline from 'mdi-material-ui/CubeOutline'
@@ -10,7 +10,25 @@ import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
 import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
 import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
 
+
 const navigation = () => {
+  const [myId, setMyId] = useState("")
+
+
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+
+      const getUser = localStorage.getItem("jwt")
+      const parseData = JSON.parse(getUser)
+      setMyId(parseData.SponserCode)
+
+    }
+  }, [])
+
+
+
+
   return [
     {
       title: 'Dashboard',
@@ -48,7 +66,7 @@ const navigation = () => {
     {
       title: 'Genealogy',
       icon: AccountCogOutline,
-      path: '/Member/Genealogy'
+      path: `/Member/Genealogy?id=${myId}`
     },
     {
       title: 'Rank Eligibility',
