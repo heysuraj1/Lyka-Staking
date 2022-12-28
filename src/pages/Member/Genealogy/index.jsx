@@ -105,7 +105,7 @@ const MUITable = () => {
             <SuperUserLevel updateData={updateData} datas={datas} />
             <Grid item xs={12}>
               <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
-                <img class="center" src="/lines.png" alt="" />
+                <img className="center" src="/lines.png" alt="" />
               </div>
             </Grid>
 
@@ -113,7 +113,7 @@ const MUITable = () => {
               <LeftLine datas={datas} />
               <Grid item xs={12}>
                 <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
-                  <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                  <img className="center" style={{ width: "60%" }} src="/lines.png" alt="" />
                 </div>
               </Grid>
               <div style={{ marginTop: 30 }}>
@@ -122,7 +122,7 @@ const MUITable = () => {
                     <ThirdLevelLeft datas={datas} />
                     <Grid item xs={12}>
                       <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
-                        <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                        <img className="center" style={{ width: "60%" }} src="/lines.png" alt="" />
                       </div>
                     </Grid>
                     <div style={{ marginTop: 40 }}>
@@ -142,7 +142,7 @@ const MUITable = () => {
                     <ThirdLevelRight datas={datas} />
                     <Grid item xs={12}>
                       <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
-                        <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                        <img className="center" style={{ width: "60%" }} src="/lines.png" alt="" />
                       </div>
                     </Grid>
                     <div style={{ marginTop: 40 }}>
@@ -168,7 +168,7 @@ const MUITable = () => {
 
               <Grid item xs={12}>
                 <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
-                  <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                  <img className="center" style={{ width: "60%" }} src="/lines.png" alt="" />
                 </div>
               </Grid>
               <div style={{ marginTop: 30 }}>
@@ -177,7 +177,7 @@ const MUITable = () => {
                     <ThirdLevelLeft2 datas={datas} />
                     <Grid item xs={12}>
                       <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
-                        <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                        <img className="center" style={{ width: "60%" }} src="/lines.png" alt="" />
                       </div>
                     </Grid>
                     <div style={{ marginTop: 40 }}>
@@ -198,7 +198,7 @@ const MUITable = () => {
                     <ThirdLevelRight2 datas={datas} />
                     <Grid item xs={12}>
                       <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
-                        <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                        <img className="center" style={{ width: "60%" }} src="/lines.png" alt="" />
                       </div>
                     </Grid>
                     <div style={{ marginTop: 40 }}>
