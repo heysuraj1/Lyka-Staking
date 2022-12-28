@@ -6,7 +6,7 @@ initDB()
 export default async (req, res) => {
   const { id } = req.body
 
-  var findSuperUser = await User.findById(id)
+  var findSuperUser = await User.findOne({SponserCode:id})
 
   var superUserId = findSuperUser.SponserCode == "null" ? null : findSuperUser.SponserCode
   var superUserName = findSuperUser.FullName == "null" ? null : findSuperUser.FullName

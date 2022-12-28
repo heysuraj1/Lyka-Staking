@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
 
-const SuperUserLevel = ({datas}) => {
+const SuperUserLevel = ({datas,updateData}) => {
   return (
     <Grid item xs={12}>
       {

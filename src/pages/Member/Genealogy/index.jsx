@@ -1,4 +1,3 @@
-// ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import Card from '@mui/material/Card'
@@ -32,12 +31,13 @@ import axios from 'axios'
 
 const MUITable = () => {
 
-  
+
   const [packageId, setPackageId] = useState('63a09f41f5579f410045984c')
   const [price, setPrice] = useState('')
   const [datas, setDatas] = useState('')
   const [showHistoryScreen, setShowHistoryScreen] = useState(null)
   const [TopUpHistory, setTopUpHistory] = useState('')
+  const [idName, setIdName] = useState("")
 
 
 
@@ -46,127 +46,185 @@ const MUITable = () => {
 
       const getUser = localStorage.getItem("jwt")
       const parseData = JSON.parse(getUser)
-  
-      console.log("the id is ==> "+parseData._id)
-        axios.post("/api/ChartGeograph",{
-          id:parseData._id
-        }).then((acc)=>{
-          console.log(acc.data)
-          setDatas(acc.data)
-        })
-        .catch((err)=>{
+
+      axios.post("/api/ChartGeograph", {
+        // id: "63ab2b75650f1236cc40fd9a"
+        // id: parseData._id
+        id: parseData.SponserCode
+      }).then((acc) => {
+        console.log(acc.data)
+        setDatas(acc.data)
+      })
+        .catch((err) => {
           console.log(err)
         })
-    }    
+    }
   }, [])
-  
-  
+
+
+
+  const updateData = ({itm}) => {
+
+
+
+    console.log(itm)
+
+    const getUser = localStorage.getItem("jwt")
+    const parseData = JSON.parse(getUser)
+
+
+    axios.post("/api/ChartGeograph", {
+      // id: "63ab2b75650f1236cc40fd9a"
+      // id: parseData._id
+      id: idName
+    }).then((acc) => {
+      console.log(acc.data)
+      setDatas(acc.data)
+    })
+      .catch((err) => {
+        console.log(err)
+      })
 
 
 
 
 
 
-
-
-
-
+  }
 
   return (
     <>
-    {
-      datas ? 
+      {
+        datas ?
 
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant='h4'>Member/Genealogy</Typography>
-        </Grid>
-
-        <SuperUserLevel datas={datas} />
-
-        <Grid item xs={6}>
-          <LeftLine datas={datas} />
-          <div style={{ marginTop: 30 }}>
-            <Grid container>
-              <Grid item xs={6}>
-                <ThirdLevelLeft datas={datas} />
-                <div style={{ marginTop: 40 }}>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <LeftOne1 datas={datas}/>
-                      <div></div>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <RightOne1 datas={datas}/>
-                      <div></div>
-                    </Grid>
-                  </Grid>
-                </div>
-              </Grid>
-              <Grid item xs={6}>
-                <ThirdLevelRight datas={datas}/>
-                <div style={{ marginTop: 40 }}>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <LeftOne2 datas={datas}/>
-
-                      <div></div>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <LevelTwo2 datas={datas}/>
-                      <div></div>
-                    </Grid>
-                  </Grid>
-                </div>
-              </Grid>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography variant='h4'>Member/Genealogy</Typography>
             </Grid>
-          </div>
-        </Grid>
 
-        <Grid item xs={6}>
-          <RightLine datas={datas}/>
-          <div style={{ marginTop: 30 }}>
-            <Grid container>
-              <Grid item xs={6}>
-                <ThirdLevelLeft2 datas={datas}/>
-                <div style={{ marginTop: 40 }}>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <LeftOne3 datas={datas}/>
-                      <div></div>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <RightOne3 datas={datas}/>
-                      <div></div>
-                    </Grid>
-                  </Grid>
-                </div>
-              </Grid>
-              <Grid item xs={6}>
-                <ThirdLevelRight2 datas={datas}/>
-                <div style={{ marginTop: 40 }}>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <LeftOne4 datas={datas}/>
-                      <div></div>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <RightOne4 datas={datas}/>
-                      <div></div>
-                    </Grid>
-                  </Grid>
-                </div>
-              </Grid>
+            <SuperUserLevel updateData={updateData} datas={datas} />
+            <Grid item xs={12}>
+              <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
+                <img class="center" src="/lines.png" alt="" />
+              </div>
             </Grid>
-          </div>
-        </Grid>
-      </Grid>
 
-      :
+            <Grid item xs={6}>
+              <LeftLine datas={datas} />
+              <Grid item xs={12}>
+                <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
+                  <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                </div>
+              </Grid>
+              <div style={{ marginTop: 30 }}>
+                <Grid container>
+                  <Grid item xs={6}>
+                    <ThirdLevelLeft datas={datas} />
+                    <Grid item xs={12}>
+                      <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
+                        <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                      </div>
+                    </Grid>
+                    <div style={{ marginTop: 40 }}>
+                      <Grid container>
+                        <Grid item xs={6}>
+                          <LeftOne1 datas={datas} />
+                          <div></div>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <RightOne1 datas={datas} />
+                          <div></div>
+                        </Grid>
+                      </Grid>
+                    </div>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <ThirdLevelRight datas={datas} />
+                    <Grid item xs={12}>
+                      <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
+                        <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                      </div>
+                    </Grid>
+                    <div style={{ marginTop: 40 }}>
+                      <Grid container>
+                        <Grid item xs={6}>
+                          <LeftOne2 datas={datas} />
+
+                          <div></div>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <LevelTwo2 datas={datas} />
+                          <div></div>
+                        </Grid>
+                      </Grid>
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+
+            <Grid item xs={6}>
+              <RightLine datas={datas} />
+
+              <Grid item xs={12}>
+                <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
+                  <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                </div>
+              </Grid>
+              <div style={{ marginTop: 30 }}>
+                <Grid container>
+                  <Grid item xs={6}>
+                    <ThirdLevelLeft2 datas={datas} />
+                    <Grid item xs={12}>
+                      <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
+                        <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                      </div>
+                    </Grid>
+                    <div style={{ marginTop: 40 }}>
+                      <Grid container>
+                        <Grid item xs={6}>
+                          <LeftOne3 datas={datas} />
+
+                          <div></div>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <RightOne3 datas={datas} />
+                          <div></div>
+                        </Grid>
+                      </Grid>
+                    </div>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <ThirdLevelRight2 datas={datas} />
+                    <Grid item xs={12}>
+                      <div style={{ alignSelf: "center", alignItems: "center", alignContent: "center" }}>
+                        <img class="center" style={{ width: "60%" }} src="/lines.png" alt="" />
+                      </div>
+                    </Grid>
+                    <div style={{ marginTop: 40 }}>
+                      <Grid container>
+                        <Grid item xs={6}>
+                          <LeftOne4 datas={datas} />
+
+                          <div></div>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <RightOne4 datas={datas} />
+                          <div></div>
+                        </Grid>
+                      </Grid>
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+          </Grid>
+
+          :
 
 
-      <></>
-    }
+          <></>
+      }
     </>
   )
 }
