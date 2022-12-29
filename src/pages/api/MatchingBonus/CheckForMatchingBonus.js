@@ -79,21 +79,10 @@ export default async (req, res) => {
 
                 const GiveMatchingBonus = await User.findById(FindAllUsers[index]._id)
 
-                const userWallet = GiveMatchingBonus.MainWallet
+                const userWallet = Number(GiveMatchingBonus.MainWallet) + Number(packPercantage)
 
 
-                const ProvideMatchingBonus = await User.findByIdAndUpdate({ _id: FindAllUsers[index]._id }, { MainWallet: packPercantage })
-
-
-
-
-
-
-
-
-
-
-
+                const ProvideMatchingBonus = await User.findByIdAndUpdate({ _id: FindAllUsers[index]._id }, { MainWallet: userWallet })
 
             } else {
 
