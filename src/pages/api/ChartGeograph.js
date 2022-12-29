@@ -6,7 +6,7 @@ initDB()
 export default async (req, res) => {
   const { id } = req.body
 
-  var findSuperUser = await User.findOne({SponserCode:id})
+  var findSuperUser = await User.findOne({ SponserCode: id })
 
   var superUserId = findSuperUser.SponserCode == "null" ? null : findSuperUser.SponserCode
   var superUserName = findSuperUser.FullName == "null" ? null : findSuperUser.FullName
@@ -48,7 +48,7 @@ export default async (req, res) => {
     if (LevelOneLeftSideUser.RightTeamId !== 'null') {
       const f2Name = await User.findById(LevelOneLeftSideUser.RightTeamId)
       var RightSideId2 = f2Name.FullName
-      
+
     } else {
       RightSideId2 = 'null'
     }
@@ -94,10 +94,10 @@ export default async (req, res) => {
 
 
   if (LevelOneLeftSideUser.LeftTeamId !== 'null' && LevelOneLeftSideUser.LeftTeamId !== undefined) {
-   
+
 
     var fUserData1 = await User.findById(LevelOneLeftSideUser.LeftTeamId)
- 
+
 
     if (fUserData1.LeftTeamId !== "null") {
 
@@ -105,7 +105,7 @@ export default async (req, res) => {
       var firstLeftKaLeftSponser = "null"
 
       var againLeftUpper = await User.findById(fUserData1.LeftTeamId)
-      
+
       firstLeftKaLeftName = againLeftUpper.FullName
       firstLeftKaLeftSponser = againLeftUpper.SponserCode
     }
@@ -116,7 +116,7 @@ export default async (req, res) => {
 
     if (fUserData1.RightTeamId !== "null") {
       var againRightUpper = await User.findById(fUserData1.RightTeamId)
-     
+
 
       firstLeftKaRightName = againRightUpper.FullName
       firstLeftKaRightSponser = againRightUpper.SponserCode
@@ -130,7 +130,7 @@ export default async (req, res) => {
 
 
     var OneLeftLineName = fUserData1.LeftTeamName
-    
+
 
 
 
@@ -164,7 +164,7 @@ export default async (req, res) => {
       var SecLeftKaLeftSponser = "null"
 
       var againLeftUpper = await User.findById(fUserData2.LeftTeamId)
-      
+
       SecLeftKaLeftName = againLeftUpper.FullName
       SecLeftKaLeftSponser = againLeftUpper.SponserCode
     }
@@ -175,19 +175,13 @@ export default async (req, res) => {
 
     if (fUserData2.RightTeamId !== "null") {
       var againRightUpper = await User.findById(fUserData2.RightTeamId)
-      
-      
+
+
 
       SecLeftKaRightName = againRightUpper.FullName
       SecLeftKaRightSponser = againRightUpper.SponserCode
 
     }
-
-
-
-
-
-
 
     var TwoLeftLineName = fUserData2.LeftTeamName
     var TwoLeftLineId = fUserData2.SponserCode
@@ -202,14 +196,8 @@ export default async (req, res) => {
   }
 
 
-
-
-
   if (LevelOneRightSideUser.LeftTeamId !== 'null' && LevelOneRightSideUser.LeftTeamId !== undefined) {
     var fUserData3 = await User.findById(LevelOneRightSideUser.LeftTeamId)
-
-
-
 
 
     var ThirdLeftKaLeftName = "null"
@@ -219,7 +207,7 @@ export default async (req, res) => {
 
 
       var againLeftUpper = await User.findById(fUserData3.LeftTeamId)
-      
+
       ThirdLeftKaLeftName = againLeftUpper.FullName
       ThirdLeftKaLeftSponser = againLeftUpper.SponserCode
     }
@@ -230,22 +218,12 @@ export default async (req, res) => {
 
     if (fUserData3.RightTeamId !== "null") {
       var againRightUpper = await User.findById(fUserData3.RightTeamId)
-      
+
 
       ThirdLeftKaRightName = againRightUpper.FullName
       ThirdLeftKaRightSponser = againRightUpper.SponserCode
 
     }
-
-
-
-
-
-
-
-
-
-
 
 
     var ThreeLeftLineName = fUserData3.LeftTeamName
@@ -272,7 +250,7 @@ export default async (req, res) => {
 
 
       var againLeftUpper = await User.findById(fUserData4.LeftTeamId)
-      
+
       FourLeftKaLeftName = againLeftUpper.FullName
       FourLeftKaLeftSponser = againLeftUpper.SponserCode
     }
@@ -283,15 +261,11 @@ export default async (req, res) => {
 
     if (fUserData4.RightTeamId !== "null") {
       var againRightUpper = await User.findById(fUserData4.RightTeamId)
-    
 
       FourLeftKaRightName = againRightUpper.FullName
       FourLeftKaRightSponser = againRightUpper.SponserCode
 
     }
-
-
-
 
 
     var FourLeftLineName = fUserData4.LeftTeamName
@@ -305,18 +279,6 @@ export default async (req, res) => {
     FourRightLineName = 'null'
     FourRightLineId = 'null'
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   res.json({

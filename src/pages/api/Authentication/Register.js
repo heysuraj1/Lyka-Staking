@@ -14,8 +14,11 @@ export default async (req, res) => {
 
   let checkReferalUser;
 
+  let upUser
+
   if (UpperlineUser) {
     checkReferalUser = await User.findOne({ SponserCode: UpperlineUser })
+    upUser = await User.findOne({ SponserCode: UpperlineUser })
     if (!checkReferalUser) {
       return res.status(404).json({ error: 'Referal Id Is Wrong. Please Check It Again.' })
     }
@@ -23,8 +26,7 @@ export default async (req, res) => {
     if (checkReferalUser.length == 0) {
       return res.status(404).json({ error: 'Referal Id Is Wrong. Please Check It Again.' })
     } else {
-      // console.log(checkReferalUser.LeftTeamId)
-      // console.log(checkReferalUser.RightTeamId)
+
       let currentChildId = Position === "Left" ? checkReferalUser.LeftTeamId : checkReferalUser.RightTeamId;
 
       console.log("iniChilID", currentChildId);
@@ -37,25 +39,6 @@ export default async (req, res) => {
         checkReferalUser = currentChildNode;
         currentChildId = Position === "Left" ? checkReferalUser.LeftTeamId : checkReferalUser.RightTeamId;
       }
-
-    //   let chekingUserLeft = checkReferalUser.LeftTeamId
-    //   let chekingUserRight = checkReferalUser.RightTeamId
-
-    //   while (chekingUserLeft !== 'null') {
-    //     console.log(chekingUserLeft)
-    //     console.log(chekingUserRight)
-
-    //     var check1 = await User.findById(chekingUserLeft)
-
-    //     if (check1 == null) {
-    //       console.log('breaking this line ====xxxx=====>')
-    //       break
-    //     }
-
-    //     chekingUserLeft = check1.LeftTeamId
-    //     chekingUserRight = check1.RightTeamId
-    //   }
-    // }
     }
   }
 
@@ -91,7 +74,7 @@ export default async (req, res) => {
       Country,
       ContactNumber,
       EmailId,
-      UpperlineUser: checkReferalUser._id,
+      UpperlineUser: upUser._id,
       Passsword: hashedPassowd,
       SponserCode: generatedUserName,
       UserName: generateUserN + randValue2

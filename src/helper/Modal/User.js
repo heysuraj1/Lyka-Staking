@@ -65,6 +65,11 @@ const User = mongoose.Schema(
     RightTeamName: {
       default: 'null',
       type: 'String'
+    },
+    MatchingBonusWallet: {
+      default: '0',
+      type: 'String',
+      required:true
     }
 
   },
@@ -73,4 +78,4 @@ const User = mongoose.Schema(
   }
 )
 
-export default mongoose.models.Userr || mongoose.model('Userr', User)
+export default mongoose.models.Userrrr || mongoose.model('Userrrr', User)

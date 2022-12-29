@@ -28,10 +28,7 @@ import RightOne4 from '../Levels/FourthLevel/RightOne4'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 
-
-
 const MUITable = () => {
-
 
   const [packageId, setPackageId] = useState('63a09f41f5579f410045984c')
   const [price, setPrice] = useState('')
@@ -39,7 +36,6 @@ const MUITable = () => {
   const [showHistoryScreen, setShowHistoryScreen] = useState(null)
   const [TopUpHistory, setTopUpHistory] = useState('')
   const [idName, setIdName] = useState("")
-
 
   const router = useRouter()
 
