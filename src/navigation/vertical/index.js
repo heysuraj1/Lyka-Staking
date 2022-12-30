@@ -54,6 +54,11 @@ const navigation = () => {
       path: '/ReferalCommisions'
     },
     {
+      title: 'Matching Bonus',
+      icon: AccountCogOutline,
+      path: '/MatchingBonus'
+    },
+    {
       title: 'Daily Bounus',
       icon: AccountCogOutline,
       path: '/DailyBounus'
@@ -78,6 +83,7 @@ const navigation = () => {
       icon: AccountCogOutline,
       path: '/GlobalBonusHistory'
     },
+
     // {
     //   sectionTitle: 'Pages'
     // },

@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -49,8 +49,19 @@ const TabAccount = ({datas}) => {
   // ** State
   const [openAlert, setOpenAlert] = useState(true)
   const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
+  const [sides, setSides] = useState("Left")
+  const [leftCode, setLeftCode] = useState("")
 
   console.log(datas)
+
+  useEffect(() => {
+
+    setLeftCode(`https://lyka-staking.vercel.app/?RferCode=${datas.SponserCode}&Posi=${sides}`)
+    
+  
+   
+  }, [])
+  
 
   const onChange = file => {
     const reader = new FileReader()
@@ -59,6 +70,19 @@ const TabAccount = ({datas}) => {
       reader.onload = () => setImgSrc(reader.result)
       reader.readAsDataURL(files[0])
     }
+  }
+
+  const chnageSide = () =>{
+    console.log("clicked")
+
+    if (sides == "Left") {
+      setSides("Right")
+    }
+    if (sides == "Right") {
+      setSides("Left")
+    }
+
+
   }
 
   return (
@@ -123,35 +147,51 @@ const TabAccount = ({datas}) => {
             />
           </Grid>
 
-          {/* {openAlert ? (
-            <Grid item xs={12} sx={{ mb: 3 }}>
-              <Alert
-                severity='warning'
-                sx={{ '& a': { fontWeight: 400 } }}
-                action={
-                  <IconButton size='small' color='inherit' aria-label='close' onClick={() => setOpenAlert(false)}>
-                    <Close fontSize='inherit' />
-                  </IconButton>
-                }
-              >
-                <AlertTitle>Your email is not confirmed. Please check your inbox.</AlertTitle>
-                <Link href='/' onClick={e => e.preventDefault()}>
-                  Resend Confirmation
-                </Link>
-              </Alert>
-            </Grid>
-          ) : null}
-
-          <Grid item xs={12}>
-            <Button variant='contained' sx={{ marginRight: 3.5 }}>
-              Save Changes
-            </Button>
-            <Button type='reset' variant='outlined' color='secondary'>
-              Reset
-            </Button>
-          </Grid> */}
         </Grid>
       </form>
+
+
+<div style={{marginTop:30}}>
+
+    
+
+
+
+
+
+
+          <Grid item xs={10} sm={6}>
+          <FormControl fullWidth>
+            <TextField
+            contentEditable={false}
+              fullWidth
+              type='text'
+              label='Refer Code'
+              placeholder='Refer Code'
+             value={`https://lyka-staking.vercel.app?RferCode=${datas.SponserCode}&Posi=${sides}`}
+            />
+
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+          <h5 style={{cursor:"pointer"}} onClick={chnageSide}>Change Side
+        
+
+          </h5>
+          </Grid>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
     </CardContent>
   )
 }

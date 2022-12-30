@@ -1,6 +1,7 @@
 import initDB from "../../../helper/initDB"
 import User from "../../../helper/Modal/User"
 import PackageHistory from "../../../helper/Modal/History/PackageHistory"
+import MatchingBonusHistory from "../../../helper/Modal/History/MatchingBonusHistory"
 
 initDB()
 
@@ -28,54 +29,18 @@ export default async (req, res) => {
                     if (findUserDirects[index].Position == "Right") {
 
                         LeftWall = Number(LeftWall) + Number(findUserDirects[index].MatchingBonusWallet)
-
                     }
-
                     if (findUserDirects[index].Position == "Left") {
 
                         RightWall = Number(RightWall) + Number(findUserDirects[index].MatchingBonusWallet)
 
                     }
-
-
-
                 }
-
-
-
             }
 
             if (LeftWall >= Number(PackPrice) && RightWall >= Number(PackPrice)) {
 
                 console.log("Yes he is eligible for matching bonus")
-
-                // if (findUserDirects[index].Position == "Right") {
-
-                //     if (LeftWall >= Number(PackPrice)) {
-
-                //         var walp = Number(PackPrice) - LeftWall
-
-                //         const UpdateWallet = await User.findByIdAndUpdate({ _id: findUserDirects[index]._id }, { MatchingBonusWallet: walp })
-
-
-                //     }
-
-
-                // }
-
-
-                // if (findUserDirects[index].Position == "Left") {
-
-                //     if (RightWall >= Number(PackPrice)) {
-
-                //         var walpp = Number(PackPrice) - RightWall
-
-                //         const UpdateWallets = await User.findByIdAndUpdate({ _id: findUserDirects[index]._id }, { MatchingBonusWallet: walpp })
-
-
-                //     }
-                // }
-
 
                 const GiveMatchingBonus = await User.findById(FindAllUsers[index]._id)
 
@@ -83,6 +48,14 @@ export default async (req, res) => {
 
 
                 const ProvideMatchingBonus = await User.findByIdAndUpdate({ _id: FindAllUsers[index]._id }, { MainWallet: userWallet })
+
+
+                const CreateRecord = await MatchingBonusHistory({
+                    BonusOwner:FindAllUsers[index]._id,
+                    Amount:packPercantage,
+                    Matching:PackPrice,
+                    Rate:"8%"
+                }).save()
 
             } else {
 

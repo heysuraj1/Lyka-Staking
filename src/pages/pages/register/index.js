@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import React,{ useState, Fragment,useEffect } from 'react'
 import Link from 'next/link'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -30,6 +30,7 @@ import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 import axios from 'axios'
 
 
+
 const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '28rem' }
 }))
@@ -52,7 +53,35 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 
 
 const RegisterPage = ({setShowRegister}) => {
+  const [referCodeFromQuery, setReferCodeFromQuery] = useState("")
+  const [positinNamFromQuery, setPositinNamFromQuery] = useState("")
+
+
   const router = useRouter()
+
+  
+  
+  
+  useEffect(() => {
+    if(!router.isReady) return;
+    
+    const {RferCode,Posi} = router.query
+    
+    console.log("refer code is => "+RferCode)
+    console.log("position is => "+Posi)
+
+    setReferCodeFromQuery(RferCode)
+    setPositinNamFromQuery(Posi)
+    setPosition(Posi)
+    setReferCode(RferCode)
+    
+  }, [router.isReady])
+  
+
+
+
+
+
 
   // ** States
   const [values, setValues] = useState({
@@ -198,7 +227,7 @@ const RegisterPage = ({setShowRegister}) => {
             <Typography variant='body2'>Make your app management easy and fun!</Typography>
           </Box>
           <form noValidate autoComplete='off'  onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus onChange={(e)=>{setReferCode(e.target.value)}} fullWidth  label='Referral Code' sx={{ marginBottom: 4 }} />
+            <TextField value={referCode} autoFocus onChange={(e)=>{setReferCode(e.target.value)}} fullWidth  label='Referral Code' sx={{ marginBottom: 4 }} />
             <TextField onChange={(e)=>{setFullName(e.target.value)}}  fullWidth  label='Full Name' sx={{ marginBottom: 4 }} />
             {/* <TextField onChange={(e)=>{setPosition(e.target.value)}}  fullWidth  label='Select Position' sx={{ marginBottom: 4 }} /> */}
 
@@ -206,7 +235,7 @@ const RegisterPage = ({setShowRegister}) => {
               <InputLabel id='form-layouts-separator-select-label'>Select Side</InputLabel>
               <Select
                 label='Select Side'
-                defaultValue=''
+                value={Position}
                 id='form-layouts-separator-select'
                 labelId='form-layouts-separator-select-label'
                 onChange={(e)=>{setPosition(e.target.value)}}
