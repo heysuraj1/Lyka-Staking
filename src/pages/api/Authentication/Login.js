@@ -6,15 +6,12 @@ initDB()
 
 export default async (req,res) =>{
 
-
     const { identifier, password } = req.body;
 
     if (!identifier || !password) {
       
       return res
-
         .status(404)
-      
         .json({ error: "You Have Not Provided All The Informations" });
     }
   
@@ -22,7 +19,7 @@ export default async (req,res) =>{
     return res.status(502).json({ error: "Please Enter UserID"} )
     } else {
       console.log(identifier)
-      const number = await User.find({ UserName: identifier });
+      const number = await User.find({ SponserCode: identifier });
 
 
       console.log(number)
