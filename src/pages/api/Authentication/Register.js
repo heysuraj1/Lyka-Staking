@@ -46,13 +46,13 @@ export default async (req, res) => {
 
   const hashedPassowd = await bcrypt.hash(Passsword, 12)
 
-  var randValue = Math.floor(Math.random() * 90000)
+  var randValue = Math.floor(Math.random() * 900000)
   var randValue2 = Math.floor(Math.random() * 90000)
 
   var checkRandValue = await User.findOne({ UserName: randValue })
 
   while (checkRandValue !== null) {
-    randValue = Math.floor(Math.random() * 90000)
+    randValue = Math.floor(Math.random() * 900000)
     randValue2 = Math.floor(Math.random() * 90000)
 
     checkRandValue = await User.findOne({ UserName: randValue })

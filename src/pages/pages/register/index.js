@@ -55,6 +55,7 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 const RegisterPage = ({setShowRegister}) => {
   const [referCodeFromQuery, setReferCodeFromQuery] = useState("")
   const [positinNamFromQuery, setPositinNamFromQuery] = useState("")
+  const [userName, setUserName] = useState("Check")
 
 
   const router = useRouter()
@@ -76,6 +77,36 @@ const RegisterPage = ({setShowRegister}) => {
     setReferCode(RferCode)
     
   }, [router.isReady])
+
+
+  const findUserDataFromRefer = () =>{
+
+
+    try {
+      axios.post("/api/findRferUserData",{
+        "sponserID":referCode
+      })
+      .then((acc)=>{
+        console.log(acc.data)
+        setUserName(acc.data)
+      })
+      .catch((err)=>{
+        console.log(err)
+        setUserName("Check It Again")
+        
+      })
+      
+    } catch (error) {
+      setUserName("Check It Again")
+      
+    }
+
+
+
+
+
+
+  }
   
 
 
@@ -228,6 +259,10 @@ const RegisterPage = ({setShowRegister}) => {
           </Box>
           <form noValidate autoComplete='off'  onSubmit={e => e.preventDefault()}>
             <TextField value={referCode} autoFocus onChange={(e)=>{setReferCode(e.target.value)}} fullWidth  label='Referral Code' sx={{ marginBottom: 4 }} />
+            <div style={{cursor:"pointer"}} onClick={findUserDataFromRefer}>
+            <Typography style={{marginBottom:10,marginTop:-20,color:"green"}} variant='body2'>{userName}</Typography>
+            </div>
+            
             <TextField onChange={(e)=>{setFullName(e.target.value)}}  fullWidth  label='Full Name' sx={{ marginBottom: 4 }} />
             {/* <TextField onChange={(e)=>{setPosition(e.target.value)}}  fullWidth  label='Select Position' sx={{ marginBottom: 4 }} /> */}
 
