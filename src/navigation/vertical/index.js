@@ -83,6 +83,11 @@ const navigation = () => {
       icon: AccountCogOutline,
       path: '/GlobalBonusHistory'
     },
+    {
+      title: 'Direct Referal',
+      icon: AccountCogOutline,
+      path: '/DirectReferal'
+    },
 
     // {
     //   sectionTitle: 'Pages'

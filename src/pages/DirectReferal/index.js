@@ -37,7 +37,7 @@ const PackageHistory = () => {
 
     try {
       axios
-        .post('/api/History/ReferalHistory', {
+        .post('/api/directRef/drref', {
           id: parseData._id
         })
         .then(acc => {
@@ -56,7 +56,7 @@ const PackageHistory = () => {
     <div>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Typography variant='h4'>Refer Commisions</Typography>
+          <Typography variant='h4'>Direct Referal</Typography>
         </Grid>
 
         <Grid item xs={12}>
@@ -66,11 +66,11 @@ const PackageHistory = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell>S.N.</TableCell>
-                    <TableCell>AMOUNT</TableCell>
-                    <TableCell align='left'>RATE</TableCell>
-                    <TableCell align='left'>PACKAGE</TableCell>
-                    <TableCell align='left'>THROUGH</TableCell>
-                    <TableCell align='left'>DATE</TableCell>
+                    <TableCell>USER ID</TableCell>
+                    <TableCell align='left'>MOBILE</TableCell>
+                    <TableCell align='left'>TOTAL TOPUP</TableCell>
+                    <TableCell align='left'>POSITION</TableCell>
+                    <TableCell align='left'>REGISTRATION DATE</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -90,10 +90,10 @@ const PackageHistory = () => {
                   
   
                       <TableCell align='left'>{index+1}</TableCell>
-                      <TableCell align='left'>{hit.ReferralCoins}</TableCell>
-                      <TableCell align='left'>{hit.ReferralPercantage+"%"}</TableCell>
-                      <TableCell align='left'>{hit.PackageName}</TableCell>
-                      <TableCell align='left'>{hit.ReferralFrom}</TableCell>
+                      <TableCell align='left'>{hit.SponserCode}</TableCell>
+                      <TableCell align='left'>{hit.ContactNumber}</TableCell>
+                      <TableCell align='left'>{hit.MainWallet}</TableCell>
+                      <TableCell align='left'>{hit.Position}</TableCell>
                       <TableCell align='left'>{hit.createdAt}</TableCell>
   
                      

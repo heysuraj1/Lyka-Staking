@@ -33,9 +33,9 @@ export default async (req, res) => {
     await User.findByIdAndUpdate({ _id: uplineUser }, { MainWallet: calWallete })
 
     const ReferalHistory = await ReferralHistory({
-      ReferralFrom: id,
+      ReferralFrom: findUplineUserDetails.SponserCode,
       ReferralTo: uplineUser,
-      ReferralCoins: calWallete,
+      ReferralCoins: PackagePercantage,
       ReferralPercantage: findPackage.PackageReferalCommision,
       PackageName: findPackage.PackageName
     }).save()
