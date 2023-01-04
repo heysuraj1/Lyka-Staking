@@ -17,9 +17,15 @@ export default async (req, res) => {
   })
 
   for (let i = 0; i < list.length; i++) {
+    console.log(list[i].id)
     const myOldWallet = await User.findById(list[i].id)
 
+    console.log("tihs => "+myOldWallet)
+
     const investedAmount = list[i].price
+
+    var findPackHis = await PackageHistory.findOne({PackageOwner:list[i].id})
+    var walAmount = Number(findPackHis.PackagePrice) // <===== user purchased this package 
 
     var findFastBonus = await LykaFastBonus.find({ FastBonusCandidate: list[i].id })
 
@@ -30,10 +36,110 @@ export default async (req, res) => {
     if (findFastBonus.length !== 0) {
       var totLenght = findFastBonus[0].ReferLength
 
-      per = Number(totLenght) / 2
+
+      if (totLenght == 2 || 3) {
+
+        for (let index = 0; index < findFastBonus.length; index++) {
+
+          // const element = findFastBonus[index]._id;
+
+          const userM = await User.findOne({PackageHistory:findFastBonus[index]._id})
+
+          if (Number(userM.PackagePrice) > walAmount*2) {
+
+            per = Number(totLenght) / 2
+            
+          }
+  
+            console.log("block one")
+
+
+
+          
+        }
+
+
+        
+      }else if(totLenght == 4 || 6){
+
+        for (let index = 0; index < findFastBonus.length; index++) {
+
+          // const element = findFastBonus[index]._id;
+
+          const userM = await User.findOne({PackageHistory:findFastBonus[index]._id})
+
+          if (Number(userM.PackagePrice) > walAmount*4) {
+
+            per = Number(totLenght) / 2
+            
+          }
+  
+            console.log("block one")
+
+
+
+          
+        }
+        console.log("block two")
+
+
+      }else if(totLenght == 7 || 8){
+
+        for (let index = 0; index < findFastBonus.length; index++) {
+
+          // const element = findFastBonus[index]._id;
+
+          const userM = await User.findOne({PackageHistory:findFastBonus[index]._id})
+
+          if (Number(userM.PackagePrice) > walAmount*6) {
+
+            per = Number(totLenght) / 2
+            
+          }
+  
+            console.log("block one")
+
+
+
+          
+        }
+
+        console.log("block three")
+
+      }else if(totLenght == 9 || 10){
+
+        console.log("block four")
+        for (let index = 0; index < findFastBonus.length; index++) {
+
+          // const element = findFastBonus[index]._id;
+
+          const userM = await User.findOne({PackageHistory:findFastBonus[index]._id})
+
+          if (Number(userM.PackagePrice) > walAmount*5) {
+
+            per = Number(totLenght) / 2
+            
+          }
+  
+            console.log("block one")
+
+
+
+          
+        }
+
+      }
+
+
+
+
+
+      // per = Number(totLenght) / 2
     }
 
     var finalCal = (Number(investedAmount) * per) / 100
+
+    console.log(myOldWallet)
 
     var myWallete = myOldWallet.MainWallet
 
