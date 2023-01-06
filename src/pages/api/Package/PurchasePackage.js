@@ -51,6 +51,7 @@ export default async (req, res) => {
     var todayDate = month2 + '/' + dateToday.getDate() + '/' + dateToday.getFullYear()
 
     console.log(creationDate)
+    // console.log("2022-12-06T19:43:07.265+00:00")
     console.log(todayDate)
 
     const date1 = new Date(creationDate)
