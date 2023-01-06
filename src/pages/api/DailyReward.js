@@ -40,7 +40,7 @@ export default async (req, res) => {
 
       console.log("main user has purchased this package =>  "+MainUserPackagePrice)
 
-      const FindMainUserReferals = await User.find({UpperlineUser:findMainUser,PurchasedPackagePrice:MainUserPackagePrice})
+      var FindMainUserReferals = await User.find({UpperlineUser:findMainUser,PurchasedPackagePrice:MainUserPackagePrice})
 
       console.log(FindMainUserReferals.length)
 
@@ -72,7 +72,7 @@ export default async (req, res) => {
 
     await User.findByIdAndUpdate({ _id: list[i].id }, { MainWallet: finalWallete })
 
-    if (findFastBonus.length !== 0) {
+    if (FindMainUserReferals.length >= 2 ) {
       const createRecord = await LykaFastBonusHis({
         BonusOwner: list[i].id,
         FormPackage: list[i].name,
