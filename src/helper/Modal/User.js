@@ -70,6 +70,19 @@ const User = mongoose.Schema(
       default: '0',
       type: 'String',
       required:true
+    },
+    PurchasedPackageName: {
+      type: 'String',
+      required:false
+    },
+    PurchasedPackagePrice: {
+      default: '0',
+      type: 'String',
+      required:false
+    },
+    PurchasedPackageDate: {
+      type: 'String',
+      required:false
     }
 
   },
@@ -78,4 +91,4 @@ const User = mongoose.Schema(
   }
 )
 
-export default mongoose.models.Userrrr || mongoose.model('Userrrr', User)
+export default mongoose.models.myuserr || mongoose.model('myuserr', User)

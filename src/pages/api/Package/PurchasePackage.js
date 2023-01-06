@@ -96,5 +96,8 @@ export default async (req, res) => {
     PackageOwner: id
   }).save()
 
+
+  const createAnotherEntry = await User.findOneAndUpdate({_id:id},{PurchasedPackageName:findPackage.PackageName,PurchasedPackagePrice:findPackage.PackagePrice,PurchasedPackageDate:"today"})
+
   res.json('Package Created Successfully')
 }

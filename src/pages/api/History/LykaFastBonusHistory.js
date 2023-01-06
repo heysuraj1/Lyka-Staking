@@ -6,7 +6,7 @@ initDB()
 export default async (req, res) => {
   const { id } = req.body
 
-  const datas = await BonusOwner.find({ BonusOwner: id })
+  const datas = await LykaFastBonusHis.find({ BonusOwner: id })
 
   res.json(datas)
 }

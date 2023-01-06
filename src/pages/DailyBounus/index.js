@@ -92,7 +92,7 @@ const PackageHistory = () => {
                       <TableCell align='left'>{hit.FormPackage}</TableCell>
                       <TableCell align='left'>{hit.PackagePercantage+"%"}</TableCell>
                       <TableCell align='left'>{Number(hit.Amount).toFixed(2)}</TableCell>
-                      <TableCell align='left'>{hit.createdAt}</TableCell>
+                      <TableCell align='left'>{hit.createdAt.slice(0,10)}</TableCell>
   
                      
                      
