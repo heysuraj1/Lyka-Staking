@@ -76,8 +76,8 @@ const User = mongoose.Schema(
       required:false
     },
     PurchasedPackagePrice: {
-      default: '0',
-      type: 'String',
+      default: 0,
+      type: 'Number',
       required:false
     },
     PurchasedPackageDate: {
@@ -91,4 +91,4 @@ const User = mongoose.Schema(
   }
 )
 
-export default mongoose.models.myuserr || mongoose.model('myuserr', User)
+export default mongoose.models.myuse || mongoose.model('myuse', User)

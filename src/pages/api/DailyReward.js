@@ -40,7 +40,7 @@ export default async (req, res) => {
 
       console.log("main user has purchased this package =>  "+MainUserPackagePrice)
 
-      var FindMainUserReferals = await User.find({UpperlineUser:findMainUser,PurchasedPackagePrice:MainUserPackagePrice})
+      var FindMainUserReferals = await User.find({UpperlineUser:findMainUser,PurchasedPackagePrice:  { $gte: Number(MainUserPackagePrice) } })
 
       console.log(FindMainUserReferals.length)
 
