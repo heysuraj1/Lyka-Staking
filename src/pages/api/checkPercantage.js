@@ -21,10 +21,60 @@ export default async (req, res) => {
   if (findPack !== null) {
     console.log(findPack.PackagePrice)
 
-    var getPercantage = (Number(num) / 5000) * 100
+    var getPercantage
 
-    res.json(getPercantage.toFixed(0))
+
+    if (Number(findPack.PackagePrice) == 500) {
+
+        getPercantage = 5000
+
+      
+    }else if(Number(findPack.PackagePrice) == 1000) {
+
+        getPercantage = 10000
+
+      
+    }else if(Number(findPack.PackagePrice) == 2500) {
+
+
+        getPercantage = 25000
+      
+    }else if(Number(findPack.PackagePrice) == 5000) {
+
+
+        getPercantage = 100000
+      
+    }else if(Number(findPack.PackagePrice) == 10000) {
+
+
+        getPercantage = 500000
+      
+    }else if(Number(findPack.PackagePrice) == 25000) {
+
+
+        getPercantage = 1000000
+      
+    }else if(Number(findPack.PackagePrice) == 50000) {
+
+
+        getPercantage = 2500000
+      
+    }else if(Number(findPack.PackagePrice) == 50000) {
+
+
+        getPercantage = 10000000
+      
+    }
+
+
+
+
+
+
+    
+
+    res.json({goal:getPercantage,crWall:num})
   }
 
-  res.json(0)
+  res.json({goal:getPercantage,crWall:num})
 }

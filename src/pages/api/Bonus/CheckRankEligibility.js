@@ -10,9 +10,15 @@ export default async (req, res) => {
   const findAllUsers = await User.find()
 
   for (let index = 0; index < findAllUsers.length; index++) {
+
+    var num = 0
     const element = findAllUsers[index]._id
 
-    const findForRankEligibility = await RankEligibilityBonusFill.findOne({ UpperLineUserId: element })
+    const findForRankEligibility = await RankEligibilityBonusFill.find({ UpperLineUserId: element })
+
+    for (let index = 0; index < findData.length; index++) {
+      num = num + Number(findData[index].BusinessAmount)
+    }
 
 
     if (findForRankEligibility !== null) {
@@ -31,7 +37,7 @@ export default async (req, res) => {
             console.log("came here")
             
             
-            if (findForRankEligibility.BusinessAmount >= 5000) {
+            if (num >= 5000) {
               
               console.log("came here also")
 
@@ -55,7 +61,7 @@ export default async (req, res) => {
 
           } else if (Number(findWhichPackageThatUserHasPurchased[0].PackagePrice) == 1000) {
 
-            if (findForRankEligibility.BusinessAmount >= 10000) {
+            if (num >= 10000) {
               const finalWall = Number(userOldWallete.MainWallet) + 500
 
 
@@ -74,7 +80,7 @@ export default async (req, res) => {
 
           } else if (Number(findWhichPackageThatUserHasPurchased[0].PackagePrice) == 2500) {
 
-            if (findForRankEligibility.BusinessAmount >= 25000) {
+            if (num >= 25000) {
               const finalWall = Number(userOldWallete.MainWallet) + 1000
 
 
@@ -93,7 +99,7 @@ export default async (req, res) => {
 
           } else if (Number(findWhichPackageThatUserHasPurchased[0].PackagePrice) == 5000) {
 
-            if (findForRankEligibility.BusinessAmount >= 100000) {
+            if (num >= 100000) {
               const finalWall = Number(userOldWallete.MainWallet) + 2500
 
 
@@ -112,7 +118,7 @@ export default async (req, res) => {
 
           } else if (Number(findWhichPackageThatUserHasPurchased[0].PackagePrice) == 10000) {
 
-            if (findForRankEligibility.BusinessAmount >= 500000) {
+            if (num >= 500000) {
 
               const finalWall = Number(userOldWallete.MainWallet) + 5000
 
@@ -132,7 +138,7 @@ export default async (req, res) => {
 
           } else if (Number(findWhichPackageThatUserHasPurchased[0].PackagePrice) == 25000) {
 
-            if (findForRankEligibility.BusinessAmount >= 1000000) {
+            if (num >= 1000000) {
 
               const finalWall = Number(userOldWallete.MainWallet) + 10000
 
@@ -142,7 +148,7 @@ export default async (req, res) => {
 
           } else if (Number(findWhichPackageThatUserHasPurchased[0].PackagePrice) == 50000) {
 
-            if (findForRankEligibility.BusinessAmount >= 2500000) {
+            if (num >= 2500000) {
 
               const finalWall = Number(userOldWallete.MainWallet) + 25000
 
@@ -152,7 +158,7 @@ export default async (req, res) => {
 
           } else if (Number(findWhichPackageThatUserHasPurchased[0].PackagePrice) == 100000) {
 
-            if (findForRankEligibility.BusinessAmount >= 10000000) {
+            if (num >= 10000000) {
 
               const finalWall = Number(userOldWallete.MainWallet) + 50000
 

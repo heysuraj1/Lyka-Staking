@@ -9,6 +9,42 @@ const PackageHistory = () => {
   const [datas, setDatas] = useState('')
   const [buttonDisable, setButtonDisable] = useState(true)
 
+  const [percantage, setPercantage] = useState(0)
+  const [crWall, setCrWall] = useState(0)
+
+  useEffect(() => {
+    const getData = async () => {
+      const jwt = localStorage.getItem('jwt')
+      const parsedData = JSON.parse(jwt)
+      console.log("this is is => "+parsedData._id)
+
+      axios
+        .post('/api/checkPercantage', {
+          id: parsedData._id
+        })
+        .then(acc => {
+          console.log("below ==> ")
+          console.log(acc.data)
+          setPercantage(acc.data.goal)
+          setCrWall(acc.data.crWall)
+
+
+
+          if (Number(acc.data.crWall) >= Number(acc.data.goal)) {
+            setButtonDisable(false)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+    getData()
+  }, [])
+
+
+
+
+
   useEffect(() => {
     getDatas()
   }, [])
@@ -42,7 +78,7 @@ const PackageHistory = () => {
     <div>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Typography variant='h4'>Refer Commisions</Typography>
+          <Typography variant='h4'>Rank Eligibility</Typography>
         </Grid>
         <Grid item xs={6}>
           <Card style={{}}>
