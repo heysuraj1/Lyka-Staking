@@ -6,6 +6,7 @@ import User from '../../../helper/Modal/User'
 import LykaFastBonus from '../../../helper/Modal/Bonus/LykaFastBonus'
 import GlobalBonus from '../../../helper/Modal/Bonus/GlobalBonus'
 import RankEligibilityBonusFill from '../../../helper/Modal/Bonus/RankEligibilityBonusFill'
+import RankBonusHistory from '../../../helper/Modal/History/RankBonusHistory'
 
 initDB()
 
@@ -94,6 +95,18 @@ export default async (req, res) => {
       BusinessAmount:findPackage.PackagePrice,
       BusinessMonth:month,
       BusinessYear:date.getFullYear()
+
+    }).save()
+    const AddRankEligibilityHistory = await RankBonusHistory({
+      UpperLineUserId:uplineUser,
+      UpperLineUserSponser:findUplineUserDetails.SponserCode,
+      UpperLineUserEmail:findUplineUserDetails.EmailId,
+      DownLineUserId:id,
+      DownLineUserSponser:findPackagePurchaseUser.SponserCode,
+      DownLineUserEmail:findPackagePurchaseUser.EmailId,
+      BusinessAmount:findPackage.PackagePrice,
+      PurchasedPackageName:findPackage.PackageName,
+      PurchasedPackagePrice:findPackage.PackagePrice
 
     }).save()
 

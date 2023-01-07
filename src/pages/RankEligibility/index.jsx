@@ -4,8 +4,10 @@ import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import axios from 'axios'
 import WeeklyOverview from '../../views/dashboard/WeeklyOverview'
+import History from './History'
 
 const PackageHistory = () => {
+
   const [datas, setDatas] = useState('')
   const [buttonDisable, setButtonDisable] = useState(true)
 
@@ -48,6 +50,19 @@ const PackageHistory = () => {
   useEffect(() => {
     getDatas()
   }, [])
+
+
+
+
+ 
+  
+
+
+
+
+
+
+
 
   const getDatas = () => {
     var data = localStorage.getItem('jwt')
@@ -128,6 +143,9 @@ const PackageHistory = () => {
           </Card>
         </Grid>
       </Grid>
+
+
+      <History/>
     </div>
   )
 }
