@@ -61,7 +61,9 @@ const History = () => {
   
   
   }, [])
+  
   return (
+
     <div style={{marginTop:50}}>
       <Grid container spacing={6}>
         <Grid item xs={12}>

@@ -97,6 +97,7 @@ export default async (req, res) => {
       BusinessYear:date.getFullYear()
 
     }).save()
+    
     const AddRankEligibilityHistory = await RankBonusHistory({
       UpperLineUserId:uplineUser,
       UpperLineUserSponser:findUplineUserDetails.SponserCode,
