@@ -54,16 +54,6 @@ const PackageHistory = () => {
 
 
 
- 
-  
-
-
-
-
-
-
-
-
   const getDatas = () => {
     var data = localStorage.getItem('jwt')
     var parseData = JSON.parse(data)
