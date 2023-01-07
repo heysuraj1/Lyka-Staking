@@ -5,6 +5,7 @@ import ReferralHistory from '../../../helper/Modal/History/ReferralHistory'
 import User from '../../../helper/Modal/User'
 import LykaFastBonus from '../../../helper/Modal/Bonus/LykaFastBonus'
 import GlobalBonus from '../../../helper/Modal/Bonus/GlobalBonus'
+import RankEligibilityBonusFill from '../../../helper/Modal/Bonus/RankEligibilityBonusFill'
 
 initDB()
 
@@ -85,6 +86,34 @@ export default async (req, res) => {
 
       }
     }
+
+
+    const AddRankEligibility = await RankEligibilityBonusFill({
+
+      UpperLineUserId:uplineUser,
+      DownLineUserId:id,
+      BusinessAmount:findPackage.PackagePrice,
+      BusinessMonth:month,
+      BusinessYear:date.getFullYear()
+
+    }).save()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
   const createPackage = await PackageHistory({
