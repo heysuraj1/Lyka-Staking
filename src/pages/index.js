@@ -1,3 +1,4 @@
+import React,{useState,useEffect} from 'react'
 import Grid from '@mui/material/Grid'
 import Poll from 'mdi-material-ui/Poll'
 import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
@@ -12,18 +13,66 @@ import StatisticsCard from 'src/views/dashboard/StatisticsCard'
 import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
+import axios from 'axios'
+
 
 const Dashboard = () => {
+  const [datas, setDatas] = useState("")
+
+
+
+  useEffect(() => {
+
+    var ids = localStorage.getItem("jwt")
+    var parsedData = JSON.parse(ids)
+    
+
+    try {
+      
+      axios.post("/api/dashboardData/myDashboardData",{
+        id:parsedData._id
+      })
+      .then((acc)=>{
+        console.log(acc.data)
+        setDatas(acc.data)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+
+
+
+    } catch (error) {
+      console.log(error)
+    }
+  
+
+
+  }, [])
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div>
 
     <ApexChartWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12} md={4}>
-          <Trophy />
+          <Trophy datas={datas} />
         </Grid>
         <Grid item xs={12} md={8}>
-          <StatisticsCard />
+          <StatisticsCard  datas={datas}/>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <WeeklyOverview />
@@ -78,13 +127,13 @@ const Dashboard = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <SalesByCountries />
+          <SalesByCountries datas={datas}/>
         </Grid>
         <Grid item xs={12} md={12} lg={8}>
-          <DepositWithdraw />
+          <DepositWithdraw datas={datas}/>
         </Grid>
         <Grid item xs={12}>
-          <Table />
+          <Table datas={datas}/>
         </Grid>
       </Grid>
     </ApexChartWrapper>

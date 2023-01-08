@@ -22,23 +22,42 @@ export default async (req, res) => {
             if (findUserDirects.length !== 0) {
 
                 var LeftWall = 0
+                var LeftWallId = ""
                 var RightWall = 0
+                var RightWallId = ""
 
                 for (let index = 0; index < findUserDirects.length; index++) {
 
                     if (findUserDirects[index].Position == "Right") {
 
-                        LeftWall = Number(LeftWall) + Number(findUserDirects[index].MatchingBonusWallet)
+                        LeftWall = Number(LeftWall) + Number(findUserDirects[index].MainWallet)
+                        LeftWallId = findUserDirects[index]._id
                     }
                     if (findUserDirects[index].Position == "Left") {
-
-                        RightWall = Number(RightWall) + Number(findUserDirects[index].MatchingBonusWallet)
+                        
+                        RightWall = Number(RightWall) + Number(findUserDirects[index].MainWallet)
+                        RightWallId = findUserDirects[index]._id
 
                     }
                 }
             }
 
             if (LeftWall >= Number(PackPrice) && RightWall >= Number(PackPrice)) {
+
+
+
+                // this is second loop we are checking
+
+
+
+                const findThisUserData = await User.findById(FindAllUsers[index]._id)
+
+
+                
+
+
+
+
 
                 console.log("Yes he is eligible for matching bonus")
 

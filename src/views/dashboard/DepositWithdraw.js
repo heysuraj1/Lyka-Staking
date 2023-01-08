@@ -104,7 +104,7 @@ const Divider = styled(MuiDivider)(({ theme }) => ({
   }
 }))
 
-const DepositWithdraw = () => {
+const DepositWithdraw = ({datas}) => {
   return (
     <Card sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: ['column', 'column', 'row'] }}>
       <Box sx={{ width: '100%' }}>
@@ -118,14 +118,14 @@ const DepositWithdraw = () => {
           }}
         />
         <CardContent sx={{ pb: theme => `${theme.spacing(5.5)} !important` }}>
-          {depositData.map((item, index) => {
+          {datas && datas.AllDeposits.slice(0,5).map((item, index) => {
             return (
               <Box
                 key={item.title}
                 sx={{ display: 'flex', alignItems: 'center', mb: index !== depositData.length - 1 ? 6 : 0 }}
               >
                 <Box sx={{ minWidth: 38, display: 'flex', justifyContent: 'center' }}>
-                  <img src={item.logo} alt={item.title} width={item.logoWidth} height={item.logoHeight} />
+                  <img src="/images/avatars/1.png" alt={item.title} width={50} style={{borderRadius:100}} height={item.logoHeight} />
                 </Box>
                 <Box
                   sx={{
@@ -138,11 +138,11 @@ const DepositWithdraw = () => {
                   }}
                 >
                   <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
-                    <Typography sx={{ fontWeight: 600, fontSize: '0.875rem' }}>{item.title}</Typography>
-                    <Typography variant='caption'>{item.subtitle}</Typography>
+                    <Typography sx={{ fontWeight: 600, fontSize: '0.875rem' }}>{item.PackageName}</Typography>
+                    <Typography variant='caption'>{item.PaackagePeriod}</Typography>
                   </Box>
                   <Typography variant='subtitle2' sx={{ fontWeight: 600, color: 'success.main' }}>
-                    {item.amount}
+                    {item.PackagePrice}
                   </Typography>
                 </Box>
               </Box>
@@ -164,14 +164,14 @@ const DepositWithdraw = () => {
           }}
         />
         <CardContent sx={{ pb: theme => `${theme.spacing(5.5)} !important` }}>
-          {withdrawData.map((item, index) => {
+        {datas && datas.AllDeposits.slice(0,5).map((item, index) => {
             return (
               <Box
                 key={item.title}
                 sx={{ display: 'flex', alignItems: 'center', mb: index !== depositData.length - 1 ? 6 : 0 }}
               >
-                <Box sx={{ minWidth: 36, display: 'flex', justifyContent: 'center' }}>
-                  <img src={item.logo} alt={item.title} width={item.logoWidth} height={item.logoHeight} />
+                <Box sx={{ minWidth: 38, display: 'flex', justifyContent: 'center' }}>
+                  <img src="/images/avatars/1.png" alt={item.title} width={50} style={{borderRadius:100}} height={item.logoHeight} />
                 </Box>
                 <Box
                   sx={{
@@ -184,11 +184,11 @@ const DepositWithdraw = () => {
                   }}
                 >
                   <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
-                    <Typography sx={{ fontWeight: 600, fontSize: '0.875rem' }}>{item.title}</Typography>
-                    <Typography variant='caption'>{item.subtitle}</Typography>
+                    <Typography sx={{ fontWeight: 600, fontSize: '0.875rem' }}>{item.PackageName}</Typography>
+                    <Typography variant='caption'>{item.PaackagePeriod}</Typography>
                   </Box>
-                  <Typography variant='subtitle2' sx={{ fontWeight: 600, color: 'error.main' }}>
-                    {item.amount}
+                  <Typography variant='subtitle2' sx={{ fontWeight: 600, color: 'success.main' }}>
+                    {item.PackagePrice}
                   </Typography>
                 </Box>
               </Box>
