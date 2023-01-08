@@ -2,7 +2,10 @@ import RankBonusHistory from 'src/helper/Modal/History/RankBonusHistory'
 import initDB from '../../helper/initDB'
 import GlobalBonus from '../../helper/Modal/Bonus/GlobalBonus'
 import GlobalBonusHistory from '../../helper/Modal/History/GlobalBonusHistory'
+import PackageHistory from '../../helper/Modal/History/PackageHistory'
 import User from '../../helper/Modal/User'
+
+
 
 initDB()
 
@@ -34,10 +37,10 @@ export default async (req, res) => {
     var elegiblePeoples = []
     
 
-    const RankBonusHistoryData = await RankBonusHistory.find({UpperLineUserId:users[index]._id,created_on: {$gte: start, $lt: end}})
+    const RankBonusHistoryData = await PackageHistory.find({created_on: {$gte: start, $lt: end}})
 
     RankBonusHistoryData.map((hit)=>{
-        return TotalBusiness = TotalBusiness + Number(hit.BusinessAmount)
+        return TotalBusiness = TotalBusiness + Number(hit.PackagePrice)
     })
 
     RankBonusHistoryData.map((hits)=>{

@@ -1,6 +1,7 @@
 import initDB from "../../../helper/initDB";
 import RankBonusHistory from "../../../helper/Modal/History/RankBonusHistory";
 import User from "../../../helper/Modal/User";
+import PackageHistory from "../../../helper/Modal/History/PackageHistory";
 
 initDB()
 
@@ -25,10 +26,12 @@ export default async(req,res)=>{
     var TotalBusiness = 0
     
 
-    const RankBonusHistoryData = await RankBonusHistory.find({UpperLineUserId:id,created_on: {$gte: start, $lt: end}})
+    // const RankBonusHistoryData = await RankBonusHistory.find({UpperLineUserId:id,created_on: {$gte: start, $lt: end}})
+    const RankBonusHistoryData = await PackageHistory.find({created_on: {$gte: start, $lt: end}})
+
 
     RankBonusHistoryData.map((hit)=>{
-        return TotalBusiness = TotalBusiness + Number(hit.BusinessAmount)
+        return TotalBusiness = TotalBusiness + Number(hit.PackagePrice)
     })
 
 
