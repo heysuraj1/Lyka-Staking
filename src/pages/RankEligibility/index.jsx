@@ -6,6 +6,7 @@ import axios from 'axios'
 import WeeklyOverview from '../../views/dashboard/WeeklyOverview'
 import History from './History'
 
+
 const PackageHistory = () => {
 
   const [datas, setDatas] = useState('')
@@ -13,6 +14,8 @@ const PackageHistory = () => {
 
   const [percantage, setPercantage] = useState(0)
   const [crWall, setCrWall] = useState(0)
+  const [yourReward, setYourReward] = useState(0)
+
 
   useEffect(() => {
     const getData = async () => {
@@ -29,6 +32,8 @@ const PackageHistory = () => {
           console.log(acc.data)
           setPercantage(acc.data.goal)
           setCrWall(acc.data.crWall)
+          setYourReward(acc.data.reward)
+
 
 
 
@@ -77,7 +82,43 @@ const PackageHistory = () => {
     }
   }
 
-  const handleButtonPress = () => {}
+  const handleButtonPress = () => {
+
+    const ids = localStorage.getItem("jwt")
+    const parsed = JSON.parse(ids)
+
+
+    try {
+
+
+      axios.post("/api/RankEligibility/ClaimReward",{
+        id:parsed._id,
+        ClaimedReward:yourReward,
+        TotalBusiness:crWall
+      })
+      .then((acc)=>{
+        console.log(acc.data)
+        window.alert("Reward Given")
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+
+
+
+
+      
+    } catch (error) {
+      console.log(error)
+    }
+
+
+
+
+
+
+
+  }
 
   return (
     <div>

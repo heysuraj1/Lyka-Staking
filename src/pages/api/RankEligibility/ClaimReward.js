@@ -1,0 +1,43 @@
+import initDB from "../../../helper/initDB";
+import RankEligibilityClaim from "../../../helper/Modal/History/RankEligibilityClaim";
+import RankEligibilityBonusFill from "../../../helper/Modal/Bonus/RankEligibilityBonusFill";
+import PackageHistory from "../../../helper/Modal/History/PackageHistory";
+import User from "../../../helper/Modal/User";
+import Plan from "../../../helper/Modal/Plan";
+
+initDB()
+
+export default async (req, res) => {
+
+    const { id, ClaimedReward, TotalBusiness } = req.body;
+
+    if (!id || !ClaimedReward || !TotalBusiness) {
+        return res.status(500).json({ message: 'Please Provide All Data' })
+    }
+
+    const MainUserData = await User.findById(id)
+
+    const FindPackage = await Plan.findOne({ PackagePrice: MainUserData.PurchasedPackagePrice })
+
+
+    const NewWallet = Number(MainUserData.MainWallet) + Number(ClaimedReward)
+
+
+    await User.findByIdAndUpdate({ _id: id }, { MainWallet: NewWallet }) // giving reward
+
+
+    RankEligibilityClaim({
+
+        RankEligibilityClaimOwnerId: MainUserData._id,
+        RankEligibilityClaimOwnerUserName: MainUserData.SponserCode,
+        RankEligibilityClaimOwnerEmail: MainUserData.EmailId,
+        PackageOwnName: FindPackage.PackageName,
+        PackageOwnPrice: FindPackage.PackagePrice,
+        ClaimedReward: ClaimedReward,
+        TotBusiness: TotalBusiness
+
+    }).save()
+
+    res.status(200).json({ message: 'Claim Reward Done' })
+
+}

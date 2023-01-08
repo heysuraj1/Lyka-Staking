@@ -24,7 +24,7 @@ export default async (req, res) => {
   console.log(uplineUser)
 
   if (uplineUser !== 'null') {
-    const findUplineUserDetails = await User.findById(uplineUser)
+    var findUplineUserDetails = await User.findById(uplineUser)
 
     const lastWallete = findUplineUserDetails.MainWallet
 
@@ -88,42 +88,40 @@ export default async (req, res) => {
     }
 
 
-    const AddRankEligibility = await RankEligibilityBonusFill({
+    const upperlineWallet = findUplineUserDetails.PurchasedPackagePrice
 
-      UpperLineUserId:uplineUser,
-      DownLineUserId:id,
-      BusinessAmount:findPackage.PackagePrice,
-      BusinessMonth:month,
-      BusinessYear:date.getFullYear()
-
-    }).save()
-    
-    const AddRankEligibilityHistory = await RankBonusHistory({
-      UpperLineUserId:uplineUser,
-      UpperLineUserSponser:findUplineUserDetails.SponserCode,
-      UpperLineUserEmail:findUplineUserDetails.EmailId,
-      DownLineUserId:id,
-      DownLineUserSponser:findPackagePurchaseUser.SponserCode,
-      DownLineUserEmail:findPackagePurchaseUser.EmailId,
-      BusinessAmount:findPackage.PackagePrice,
-      PurchasedPackageName:findPackage.PackageName,
-      PurchasedPackagePrice:findPackage.PackagePrice
-
-    }).save()
+    if (findPackage.PackagePrice >= upperlineWallet) {
 
 
-
-
-
-
-
-
+      
+      const AddRankEligibility = await RankEligibilityBonusFill({
+  
+        UpperLineUserId:uplineUser,
+        DownLineUserId:id,
+        BusinessAmount:findPackage.PackagePrice,
+        BusinessMonth:month,
+        BusinessYear:date.getFullYear()
+  
+      }).save()
+      
+      const AddRankEligibilityHistory = await RankBonusHistory({
+        UpperLineUserId:uplineUser,
+        UpperLineUserSponser:findUplineUserDetails.SponserCode,
+        UpperLineUserEmail:findUplineUserDetails.EmailId,
+        DownLineUserId:id,
+        DownLineUserSponser:findPackagePurchaseUser.SponserCode,
+        DownLineUserEmail:findPackagePurchaseUser.EmailId,
+        BusinessAmount:findPackage.PackagePrice,
+        PurchasedPackageName:findPackage.PackageName,
+        PurchasedPackagePrice:findPackage.PackagePrice
+  
+      }).save()
 
 
 
 
-
-
+      
+    }
 
 
 
