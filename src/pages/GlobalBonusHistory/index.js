@@ -20,11 +20,13 @@ import axios from 'axios'
 const PackageHistory = () => {
 
   const [datas, setDatas] = useState("")
+  const [data, setData] = useState("")
 
 
 
   useEffect(() => {
     getDatas()
+    getDat()
   }, [])
 
 
@@ -53,12 +55,87 @@ const PackageHistory = () => {
     }
   }
 
+
+
+
+  const getDat = () => {
+    var data = localStorage.getItem('jwt')
+    var parseData = JSON.parse(data)
+
+    console.log(parseData._id)
+
+    try {
+      axios
+        .post('/api/GlobalPoolBusiness/CheckHeadDatas', {
+          id: parseData._id
+        })
+        .then(acc => {
+          console.log(acc.data)
+          setData(acc.data)
+    
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+
+
+
+
+
+
+
+
   return (
     <div>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Typography variant='h4'>Refer Commisions</Typography>
+          <Typography variant='h4'>Global Bonus</Typography>
         </Grid>
+
+
+
+
+        <Grid item xs={4}>
+          <Card style={{backgroundColor:"white",padding:10}}>
+
+            <Typography variant='h5' style={{textAlign:"center",marginBottom:10}}>Company Business</Typography>
+            <Typography variant='h4' style={{textAlign:"center"}}>{data?data.companyBusiness:0}$</Typography>
+            <Typography variant='subtitle2' style={{textAlign:"center",marginTop:10,color:"#945AFD",fontWeight:"bold"}}>{data&&data.fromDate} - {data&&data.toDate}</Typography>
+
+          </Card>
+        </Grid>
+        <Grid item xs={4}>
+          <Card style={{backgroundColor:"white",padding:10}}>
+
+            <Typography variant='h5' style={{textAlign:"center",marginBottom:10}}>Rank Eligibility</Typography>
+            <Typography variant='h4' style={{textAlign:"center"}}>{data?data.memberEligibleForRank:0} Person</Typography>
+            <Typography variant='subtitle2' style={{textAlign:"center",marginTop:10,color:"#945AFD",fontWeight:"bold"}}>{data&&data.fromDate} - {data&&data.toDate}</Typography>
+
+          </Card>
+        </Grid>
+        <Grid item xs={4}>
+          <Card style={{backgroundColor:"white",padding:10}}>
+
+            <Typography variant='h5' style={{textAlign:"center",marginBottom:10}}>Estimated Token</Typography>
+            <Typography variant='h4' style={{textAlign:"center"}}>{data?data.estimatedToken:0}$</Typography>
+            <Typography variant='subtitle2' style={{textAlign:"center",marginTop:10,color:"#945AFD",fontWeight:"bold"}}>{data&&data.fromDate} - {data&&data.toDate}</Typography>
+
+          </Card>
+        </Grid>
+
+
+
+
+
+
+
+
 
         <Grid item xs={12}>
           <Card>
