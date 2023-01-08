@@ -75,7 +75,9 @@ export default async(req,res)=>{
     console.log(todayTopOvers)
 
     todayTopOvers.map((hit)=>{
+        
         console.log("came here")
+
         return TodayEarning = TodayEarning + Number(hit.PackagePrice)
     })
 
