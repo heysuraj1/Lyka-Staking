@@ -115,7 +115,7 @@ const PackageHistory = () => {
 
             <Typography variant='h5' style={{textAlign:"center",marginBottom:10}}>Rank Eligibility</Typography>
             <Typography variant='h4' style={{textAlign:"center"}}>{data?data.memberEligibleForRank:0} Person</Typography>
-            <Typography variant='subtitle2' style={{textAlign:"center",marginTop:10,color:"#945AFD",fontWeight:"bold"}}>{data&&data.fromDate} - {data&&data.toDate}</Typography>
+            <Typography variant='subtitle2' style={{textAlign:"center",marginTop:10,color:"#945AFD",fontWeight:"bold"}}>{data&&data.packageStar}</Typography>
 
           </Card>
         </Grid>
