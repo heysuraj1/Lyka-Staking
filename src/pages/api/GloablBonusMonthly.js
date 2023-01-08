@@ -1,3 +1,4 @@
+import RankBonusHistory from 'src/helper/Modal/History/RankBonusHistory'
 import initDB from '../../helper/initDB'
 import GlobalBonus from '../../helper/Modal/Bonus/GlobalBonus'
 import GlobalBonusHistory from '../../helper/Modal/History/GlobalBonusHistory'
@@ -10,28 +11,124 @@ export default async (req, res) => {
 
   for (let index = 0; index < users.length; index++) {
     console.log(users[index]._id)
+    var mainUser = users[index]._id
 
-    const findGlobalBonusData = await GlobalBonus.find({ BonusOwner: users[index]._id })
 
-    if (findGlobalBonusData.length !== 0) {
-      const findUserData = await User.findById(users[index]._id)
+    var myDate = new Date()
 
-      const userAllWallete = findUserData.MainWallet
+    var myDay = 1
+    var myDay2 = myDate.getDate()
+    var myMonth = myDate.getMonth()
+    var myMonth2 = myDate.getMonth()+1
+    var myYear = myDate.getFullYear()
 
-      const rewardWallete = (Number(userAllWallete) * 1) / 100
+    var start = new Date(myYear, myMonth, myDay);
+    var end = new Date(myYear, myMonth2, myDay2);
 
-      updateWallete = await User.findByIdAndUpdate(
-        { _id: users[index]._id },
-        { MainWallet: Number(userAllWallete) + Number(rewardWallete) }
-      )
+    console.log(start)
+    console.log(end)
 
-      const CreateHistory = await GlobalBonusHistory({
-        Owner:users[index]._id,
-        Coins:rewardWallete,
-        Percantage:"1%"
-      }).save()
+    var TotalBusiness = 0
+
+
+    var elegiblePeoples = []
+    
+
+    const RankBonusHistoryData = await RankBonusHistory.find({UpperLineUserId:users[index]._id,created_on: {$gte: start, $lt: end}})
+
+    RankBonusHistoryData.map((hit)=>{
+        return TotalBusiness = TotalBusiness + Number(hit.BusinessAmount)
+    })
+
+    RankBonusHistoryData.map((hits)=>{
+      return elegiblePeoples.push(hits.DownLineUserId)
+    })
+
+    // elegiblePeoples
+
+
+    const memberEligible = RankBonusHistoryData.length // this is the count of eligible 
+
+
+    const findMainUserPackage = await User.findById(users[index]._id)
+
+
+    const mainUserPackagePrice = Number(findMainUserPackage.PurchasedPackagePrice)
+
+
+    // here we are calculating estimated tokens 
+
+    var percantage = 0
+
+    if (mainUserPackagePrice == 500) {
+        percantage = 1
+    }else if (mainUserPackagePrice == 1000) {
+        percantage = 1
+    }else if (mainUserPackagePrice == 2500) {
+        percantage = 0.5
+    }else if (mainUserPackagePrice == 5000) {
+        percantage = 0.3
+    }else if (mainUserPackagePrice == 10000) {
+        percantage = 0.2
+    }else if (mainUserPackagePrice == 25000) {
+        percantage = 0.1
+    }else if (mainUserPackagePrice == 50000) {
+        percantage = 0.1
+    }else if (mainUserPackagePrice == 100000) {
+        percantage = 0.1
     }
 
-    res.json('Updated')
+
+    console.log(percantage)
+
+
+    var est1 = Number(TotalBusiness) * percantage /100
+
+
+    var devideIt = memberEligible / est1
+
+
+
+    for (let index = 0; index < elegiblePeoples.length; index++) {
+      const userIt = elegiblePeoples[index];
+
+      const getUserOldWallet = await User.findById(userIt)
+
+      const userWallete = Number(getUserOldWallet.MainWallet) + Number(devideIt)
+
+
+      const updateWallet = await User.findByIdAndUpdate({_id:userIt},{MainWallet:userWallete})
+
+
+
+      const makeSingleHistory = await GlobalBonus({
+
+        BonusOwner:userIt,
+        Percantage:percantage
+
+
+      }).save()
+
+
+      
+    }
+
+
+
+    const makeGlobalHistory = await GlobalBonusHistory({
+
+      Owner:mainUser,
+      Coins:est1,
+      Percantage:percantage
+
+    }).save()
+
   }
+
+
+
+  return  res.json('Updated')
+
+
+
 }
