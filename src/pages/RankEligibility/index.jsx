@@ -98,7 +98,7 @@ const PackageHistory = () => {
       })
       .then((acc)=>{
         console.log(acc.data)
-        window.alert("Reward Given")
+        window.alert(acc.data.message)
       })
       .catch((err)=>{
         console.log(err)

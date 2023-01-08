@@ -15,6 +15,23 @@ export default async (req, res) => {
         return res.status(500).json({ message: 'Please Provide All Data' })
     }
 
+    const findRankEligibilityData = await RankEligibilityClaim.find({RankEligibilityClaimOwnerId:id})
+
+
+    if (findRankEligibilityData.length !== 0) {
+        return res.status(200).json({message:"Already Given Rank Eligibility"})
+    }
+
+
+    
+
+
+
+
+
+
+
+
     const MainUserData = await User.findById(id)
 
     const FindPackage = await Plan.findOne({ PackagePrice: MainUserData.PurchasedPackagePrice })
@@ -38,6 +55,6 @@ export default async (req, res) => {
 
     }).save()
 
-    res.status(200).json({ message: 'Claim Reward Done' })
+   return res.status(200).json({ message: 'Claim Reward Done' })
 
 }
