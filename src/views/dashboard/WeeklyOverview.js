@@ -59,7 +59,8 @@ const WeeklyOverview = () => {
   return (
     <Card>
       <CardHeader
-        title={`Rank Eligibility ${((Number(crWall)/Number(percantage))*100).toFixed(2)}%`}
+        title={`Rank Eligibility `}
+        // title={`Rank Eligibility ${((Number(crWall)/Number(percantage))*100).toFixed(2)}%`}
         titleTypographyProps={{
           sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
         }}
