@@ -1,8 +1,68 @@
 import initDB from "../../../helper/initDB";
 import User from "../../../helper/Modal/User";
 import PackageHistory from "../../../helper/Modal/History/PackageHistory";
+import { MongoServerError } from "mongodb";
 
 initDB()
+
+const findTotalBussiness = async(userId, totalBussinessCache) => {
+    if(userId !== "null") {
+        return {
+            success: true,
+            data: {
+                leftIncome: 0,
+                rightIncome: 0,
+                totalIncome: 0,
+            },
+        };
+    }
+
+    if(totalBussinessCache[userId] !== undefined) return {
+        success: true,
+        data: {
+            income: totalBussinessCache[userId],
+        }
+    };
+
+    try{
+        let currentUser = await User.findById(userId);
+
+        let leftUserId = currentUser.LeftTeamId;
+        let rightUserId = currentUser.RightTeamId;
+
+        const leftIncome = await findTotalBussiness(leftUserId, totalBussinessCache);
+        if (!leftIncome.success) return leftIncome;
+
+        const rightIncome = await findTotalBussiness(rightUserId, totalBussinessCache);
+        if (!rightIncome.success) return rightIncome;
+
+        const returningIncome = {
+            leftIncome: leftIncome.data.totalIncome,
+            rightIncome: rightIncome.data.totalIncome,
+            totalIncome: leftIncome.data.totalIncome + rightIncome.data.totalIncome + currentUser.PurchasedPackagePrice,
+        };
+
+        totalBussinessCache[userId] = returningIncome;
+
+        return {
+            success: true,
+            data: returningIncome
+        };
+    }
+    catch(error){
+        if(error instanceof Error || error instanceof MongoServerError){
+            return {
+                success: false,
+                error: error.message,
+            };
+        }
+
+        return {
+            success: false,
+            error: "Internal Server Error"
+        };
+    }
+}
 
 export default async(req,res)=>{
 
@@ -12,6 +72,33 @@ export default async(req,res)=>{
     const leftUser = getUserData.LeftTeamId
     const rightUser = getUserData.RightTeamId
 
+    const totalBussinessCache = {};
+    const treeData = {};
+
+    const dfsStack = [getUserData.id];
+
+    while(dfsStack.length > 0){
+        const currentUserId = dfsStack.pop();
+
+        const user = await User.findById(currentUserId);
+
+        treeData[user.id] = user;
+
+        const totalImcomeOfCurrentUser = await findTotalBussiness(currentUserId, totalBussinessCache);
+
+        if(!totalImcomeOfCurrentUser.success) continue;
+
+        treeData[user.id] = {
+            ...treeData[user.id],
+            leftIncome: totalImcomeOfCurrentUser.data.leftIncome,
+            rightIncome: totalImcomeOfCurrentUser.data.rightIncome,
+        };
+
+        if(user.LeftTeamId !== "null") dfsStack.push(user.LeftTeamId);
+        if(user.RightTeamId !== "null") dfsStack.push(user.RightTeamId);
+    }
+
+    // Refactor from here ---------->
     var leftUserAmount = 0
     var rightUserAmount = 0
 
