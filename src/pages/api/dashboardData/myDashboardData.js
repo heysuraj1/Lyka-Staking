@@ -71,34 +71,7 @@ export default async(req,res)=>{
 
     const leftUser = getUserData.LeftTeamId
     const rightUser = getUserData.RightTeamId
-
-    const totalBussinessCache = {};
-    const treeData = {};
-
-    const dfsStack = [getUserData.id];
-
-    while(dfsStack.length > 0){
-        const currentUserId = dfsStack.pop();
-
-        const user = await User.findById(currentUserId);
-
-        treeData[user.id] = user;
-
-        const totalImcomeOfCurrentUser = await findTotalBussiness(currentUserId, totalBussinessCache);
-
-        if(!totalImcomeOfCurrentUser.success) continue;
-
-        treeData[user.id] = {
-            ...treeData[user.id],
-            leftIncome: totalImcomeOfCurrentUser.data.leftIncome,
-            rightIncome: totalImcomeOfCurrentUser.data.rightIncome,
-        };
-
-        if(user.LeftTeamId !== "null") dfsStack.push(user.LeftTeamId);
-        if(user.RightTeamId !== "null") dfsStack.push(user.RightTeamId);
-    }
-
-    // Refactor from here ---------->
+    
     var leftUserAmount = 0
     var rightUserAmount = 0
 
