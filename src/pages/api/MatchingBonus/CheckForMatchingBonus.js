@@ -72,6 +72,7 @@ export default async (req, res) => {
 
         const FindMainUserPackage = await PackageHistory.findOne({ PackageOwner: FindAllUsers[index]._id })
         if (FindMainUserPackage !== null) {
+
             var PackPrice = FindMainUserPackage.PackagePrice
 
             var packPercantage = Number(PackPrice) * 8 / 100
@@ -89,12 +90,12 @@ export default async (req, res) => {
 
                     if (findUserDirects[index].Position == "Right") {
 
-                        LeftWall = Number(LeftWall) + Number(findUserDirects[index].MainWallet)
+                        LeftWall = LeftWall + Number(findUserDirects[index].PurchasedPackagePrice)
                         LeftWallId = findUserDirects[index]._id
                     }
                     if (findUserDirects[index].Position == "Left") {
                         
-                        RightWall = Number(RightWall) + Number(findUserDirects[index].MainWallet)
+                        RightWall = RightWall + Number(findUserDirects[index].PurchasedPackagePrice)
                         RightWallId = findUserDirects[index]._id
 
                     }
@@ -102,6 +103,13 @@ export default async (req, res) => {
             }
 
             if (LeftWall >= Number(PackPrice) && RightWall >= Number(PackPrice)) {
+
+                console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx =>")
+                console.log("yes he is eligible => "+FindAllUsers[index]._id)
+                console.log("in this left there is => "+LeftWall)
+                console.log("in this left there is => "+RightWall)
+                console.log("the total goal is => "+PackPrice)
+                console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx =>")
 
 
 
@@ -115,9 +123,15 @@ export default async (req, res) => {
 
                 // console.log(currentUserBussiness)
 
+                
+
                 let leftBusiness = currentUserBussiness.data.leftIncome
                 let rightBusiness = currentUserBussiness.data.rightIncome
 
+                console.log("This is sec time this user => "+FindAllUsers[index]._id)
+
+                console.log("second time this user Left =>"+leftBusiness)
+                console.log("second time this user Righ =>"+rightBusiness)
 
                 if (leftBusiness >= Number(PackPrice) && rightBusiness >= Number(PackPrice)) {
 
