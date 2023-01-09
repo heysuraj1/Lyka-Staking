@@ -6,7 +6,7 @@ import MatchingBonusHistory from "../../../helper/Modal/History/MatchingBonusHis
 initDB()
 
 const findTotalBussiness = async(userId, totalBussinessCache) => {
-    if(userId !== "null") {
+    if(userId == "null") {
         return {
             success: true,
             data: {
@@ -19,9 +19,7 @@ const findTotalBussiness = async(userId, totalBussinessCache) => {
 
     if(totalBussinessCache[userId] !== undefined) return {
         success: true,
-        data: {
-            income: totalBussinessCache[userId],
-        }
+        data: totalBussinessCache[userId]
     };
 
     try{
@@ -114,28 +112,56 @@ export default async (req, res) => {
                 // const findThisUserData = await User.findById(FindAllUsers[index]._id)
 
                 const currentUserBussiness = await findTotalBussiness(FindAllUsers[index]._id, totalBussinessCache);
+
+                // console.log(currentUserBussiness)
+
+                let leftBusiness = currentUserBussiness.data.leftIncome
+                let rightBusiness = currentUserBussiness.data.rightIncome
+
+
+                if (leftBusiness >= Number(PackPrice) && rightBusiness >= Number(PackPrice)) {
+
+                    console.log("user purchased pack => "+Number(PackPrice))
+
+
+                    console.log("leftBusiness => "+leftBusiness)
+                    console.log("rightBusiness => "+rightBusiness)
+
+                    console.log("Yes he is eligible for matching bonus")
+
+                    const GiveMatchingBonus = await User.findById(FindAllUsers[index]._id)
+    
+                    const userWallet = Number(GiveMatchingBonus.MainWallet) + Number(packPercantage)
+    
+    
+                    const ProvideMatchingBonus = await User.findByIdAndUpdate({ _id: FindAllUsers[index]._id }, { MainWallet: userWallet })
+    
+    
+                    const CreateRecord = await MatchingBonusHistory({
+                        BonusOwner:FindAllUsers[index]._id,
+                        Amount:packPercantage,
+                        Matching:PackPrice,
+                        Rate:"8%"
+                    }).save()
+
+
+
+
+                    
+                }
+
+
+
+
+
+
                 
 
 
 
 
 
-                console.log("Yes he is eligible for matching bonus")
 
-                const GiveMatchingBonus = await User.findById(FindAllUsers[index]._id)
-
-                const userWallet = Number(GiveMatchingBonus.MainWallet) + Number(packPercantage)
-
-
-                const ProvideMatchingBonus = await User.findByIdAndUpdate({ _id: FindAllUsers[index]._id }, { MainWallet: userWallet })
-
-
-                const CreateRecord = await MatchingBonusHistory({
-                    BonusOwner:FindAllUsers[index]._id,
-                    Amount:packPercantage,
-                    Matching:PackPrice,
-                    Rate:"8%"
-                }).save()
 
             } else {
 
