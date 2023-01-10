@@ -124,12 +124,21 @@ export default async (req, res) => {
 
 
     }else{
-      const createRecord = await DailyBonus({
-        BonusOwner: list[i].id,
-        FormPackage: list[i].name,
-        PackagePercantage: per,
-        Amount: finalCal
-      }).save()
+      if (FindMainUserReferals.length >= 2 ) {
+        const createRecord = await LykaFastBonusHis({
+          BonusOwner: list[i].id,
+          FormPackage: list[i].name,
+          PackagePercantage: per,
+          Amount: finalCal
+        }).save()
+      } else {
+        const createRecord = await DailyBonus({
+          BonusOwner: list[i].id,
+          FormPackage: list[i].name,
+          PackagePercantage: per,
+          Amount: finalCal
+        }).save()
+      }
     }
 
 
