@@ -45,62 +45,46 @@ export default async (req, res) => {
       const findUserPackage = await PackageHistory.findOne({PackageOwner:findMainUser})
 
 
-      const MainUserPackagePrice = findUserPackage.PackagePrice // <====== this is user purchased package
+      const MainUserPackagePrice = findUserPackage.PackagePrice 
 
-      // console.log("main user has purchased this package =>  "+MainUserPackagePrice)
+  
 
       var FindMainUserReferals = await User.find({UpperlineUser:findMainUser,PurchasedPackagePrice:  { $gte: Number(MainUserPackagePrice) } })
 
-      // console.log("tshis = > "+FindMainUserReferals.length)
+
 
 
       if (FindMainUserReferals.length == 2 || FindMainUserReferals.length == 3) {
         per = 1
-        // console.log("this is block one")
+     
       }else if(FindMainUserReferals.length == 4 || FindMainUserReferals.length == 5){
         per = 2
-        // console.log("this is block two")
+       
       }else if(FindMainUserReferals.length == 6 || FindMainUserReferals.length == 7){
         per = 3
-        // console.log("this is block three")
+    
       }else if(FindMainUserReferals.length == 8 || FindMainUserReferals.length == 9){
         per = 4
-        // console.log("this is block four")
+        
       }else if(FindMainUserReferals.length >= 10){
         per = 5
-        // console.log("this is block five")
+      
       }
 
       
 
-      // if (findRenewalBonus!==null&& findRenewalBonus.DirectReferalDone == "false") {
-
-      //   per = 0.3
-        
-        
-      // }else if(findRenewalBonus!==null){
-      //   per = 0.3
-      // }else if(findRenewalBonus.DirectReferalDone == "false"){
-      //   per = 0.3
-      // }
-      // if (findRenewalBonus!==null&& findRenewalBonus.DirectReferalDone == "true") {
-
-      // }
 
 
-
-      if (findRenewalBonus==null) {
-
-        console.log("this came in null block")
+      if (findRenewalBonus==null) {      
         
       }else if(findRenewalBonus!==null&&findRenewalBonus.DirectReferalDone == "false"){
-        console.log("fr block")
+       
         per = 0.3
       }else if(findRenewalBonus.DirectReferalDone == "false"){
-        console.log("sec block")
+     
         per = 0.3
       }else{
-        console.log("final price => "+per)
+       
       }
 
 
@@ -110,15 +94,13 @@ export default async (req, res) => {
 
     var finalCal = (Number(investedAmount) * per) / 100
 
-    // console.log(myOldWallet)
 
     var myWallete = myOldWallet.MainWallet
 
     var finalWallete = Number(myWallete) + Number(finalCal)
 
     await User.findByIdAndUpdate({ _id: list[i].id }, { MainWallet: finalWallete })
-// console.log("below")
-    // console.log(FindMainUserReferals)
+
 
 
 
