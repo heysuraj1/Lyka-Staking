@@ -15,14 +15,17 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 
-const PackageHistory = ({ TopUpHistory }) => {
+const PackageHistory = ({ TopUpHistory,setShowHistoryScreen }) => {
   console.log(TopUpHistory)
 
   return (
     <div>
       <Grid container spacing={6}>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Typography variant='h4'>Top Up History</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography onClick={()=>setShowHistoryScreen(false)} style={{textAlign:"right",fontWeight:"bold",cursor:'pointer'}} variant='subtitle2'>Repurchase Package</Typography>
         </Grid>
 
         <Grid item xs={12}>

@@ -7,138 +7,314 @@ import LykaFastBonus from '../../../helper/Modal/Bonus/LykaFastBonus'
 import GlobalBonus from '../../../helper/Modal/Bonus/GlobalBonus'
 import RankEligibilityBonusFill from '../../../helper/Modal/Bonus/RankEligibilityBonusFill'
 import RankBonusHistory from '../../../helper/Modal/History/RankBonusHistory'
+import RenewalPurchasePackage from 'src/helper/Modal/Renewal/RenewalPurchasePackage'
 
 initDB()
 
 export default async (req, res) => {
   const { packageId, Anount, id } = req.body
 
-  var Lamount = Number(Anount) * 30
 
-  const findPackage = await Package.findById(packageId)
 
-  const findPackagePurchaseUser = await User.findById(id)
 
-  const uplineUser = findPackagePurchaseUser.UpperlineUser
+  const checkPackageHis = await PackageHistory.find({ PackageOwner: id })
 
-  console.log(uplineUser)
 
-  if (uplineUser !== 'null') {
-    var findUplineUserDetails = await User.findById(uplineUser)
 
-    const lastWallete = findUplineUserDetails.MainWallet
+  if (checkPackageHis == 0) {
 
-    const PackagePercantage = (Number(findPackage.PackagePrice) * Number(findPackage.PackageReferalCommision)) / 100
+    var Lamount = Number(Anount) * 30
 
-    const calWallete = Number(lastWallete) + Number(PackagePercantage)
+    const findPackage = await Package.findById(packageId)
 
-    await User.findByIdAndUpdate({ _id: uplineUser }, { MainWallet: calWallete })
+    const findPackagePurchaseUser = await User.findById(id)
 
-    const ReferalHistory = await ReferralHistory({
-      ReferralFrom: findUplineUserDetails.SponserCode,
-      ReferralTo: uplineUser,
-      ReferralCoins: PackagePercantage,
-      ReferralPercantage: findPackage.PackageReferalCommision,
-      PackageName: findPackage.PackageName
-    }).save()
+    const uplineUser = findPackagePurchaseUser.UpperlineUser
 
-    const uplinerCreationDate = findUplineUserDetails.createdAt
+    console.log(uplineUser)
 
-    var date = new Date(uplinerCreationDate)
-    var dateToday = new Date()
-    var month = date.getMonth() + 1
-    var month2 = dateToday.getMonth() + 1
+    if (uplineUser !== 'null') {
+      var findUplineUserDetails = await User.findById(uplineUser)
 
-    var creationDate = month + '/' + date.getDate() + '/' + date.getFullYear()
-    var todayDate = month2 + '/' + dateToday.getDate() + '/' + dateToday.getFullYear()
+      var checkRenewalPackage = await RenewalPurchasePackage.find({ PackageOwner: uplineUser })
 
-    console.log(creationDate)
-    console.log(todayDate)
+      console.log(checkRenewalPackage)
 
-    const date1 = new Date(creationDate)
-    const date2 = new Date(todayDate)
-    const diffTime = Math.abs(date2 - date1)
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    console.log(diffDays + ' days')
+      const lastWallete = findUplineUserDetails.MainWallet
 
-    if (diffDays <= 10) {
-      const findData = await LykaFastBonus.find({ FastBonusCandidate: uplineUser })
+      const PackagePercantage = (Number(findPackage.PackagePrice) * Number(findPackage.PackageReferalCommision)) / 100
 
-      console.log(findData)
+      const calWallete = Number(lastWallete) + Number(PackagePercantage)
 
-      if (findData.length !== 0) {
-        const updateData = await LykaFastBonus.findByIdAndUpdate(
-          { _id: findData[0]._id },
-          { ReferLength: Number(findData[0].ReferLength) + 1 }
-        )
-      } else {
-        const createLykaFastBonus = await LykaFastBonus({
-          FastBonusCandidate: uplineUser,
-          ReferLength: '1'
+      await User.findByIdAndUpdate({ _id: uplineUser }, { MainWallet: calWallete })
+
+      const ReferalHistory = await ReferralHistory({
+        ReferralFrom: findUplineUserDetails.SponserCode,
+        ReferralTo: uplineUser,
+        ReferralCoins: PackagePercantage,
+        ReferralPercantage: findPackage.PackageReferalCommision,
+        PackageName: findPackage.PackageName
+      }).save()
+
+      const uplinerCreationDate = findUplineUserDetails.createdAt
+
+      var date = new Date(uplinerCreationDate)
+      var dateToday = new Date()
+      var month = date.getMonth() + 1
+      var month2 = dateToday.getMonth() + 1
+
+      var creationDate = month + '/' + date.getDate() + '/' + date.getFullYear()
+      var todayDate = month2 + '/' + dateToday.getDate() + '/' + dateToday.getFullYear()
+
+      console.log(creationDate)
+      console.log(todayDate)
+
+      const date1 = new Date(creationDate)
+      const date2 = new Date(todayDate)
+      const diffTime = Math.abs(date2 - date1)
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+      console.log(diffDays + ' days')
+
+      if (diffDays <= 10) {
+        const findData = await LykaFastBonus.find({ FastBonusCandidate: uplineUser })
+
+        console.log(findData)
+
+        if (findData.length !== 0) {
+          const updateData = await LykaFastBonus.findByIdAndUpdate(
+            { _id: findData[0]._id },
+            { ReferLength: Number(findData[0].ReferLength) + 1 }
+          )
+        } else {
+          const createLykaFastBonus = await LykaFastBonus({
+            FastBonusCandidate: uplineUser,
+            ReferLength: '1'
+          }).save()
+
+          const CreateGlobalBonus = await GlobalBonus({
+            BonusOwner: id,
+            Percantage: "1"
+          }).save()
+
+
+
+        }
+      }
+
+
+      const upperlineWallet = findUplineUserDetails.PurchasedPackagePrice
+
+      if (findPackage.PackagePrice >= upperlineWallet) {
+
+
+
+        const AddRankEligibility = await RankEligibilityBonusFill({
+
+          UpperLineUserId: uplineUser,
+          DownLineUserId: id,
+          BusinessAmount: findPackage.PackagePrice,
+          BusinessMonth: month,
+          BusinessYear: date.getFullYear()
+
         }).save()
 
-        const CreateGlobalBonus = await GlobalBonus({
-          BonusOwner:id,
-          Percantage:"1"
+        const AddRankEligibilityHistory = await RankBonusHistory({
+          UpperLineUserId: uplineUser,
+          UpperLineUserSponser: findUplineUserDetails.SponserCode,
+          UpperLineUserEmail: findUplineUserDetails.EmailId,
+          DownLineUserId: id,
+          DownLineUserSponser: findPackagePurchaseUser.SponserCode,
+          DownLineUserEmail: findPackagePurchaseUser.EmailId,
+          BusinessAmount: findPackage.PackagePrice,
+          PurchasedPackageName: findPackage.PackageName,
+          PurchasedPackagePrice: findPackage.PackagePrice
+
         }).save()
+
+        if (checkRenewalPackage.length !== 0) {
+          
+          const makeRenewalBonusActive = await RenewalPurchasePackage.findByIdAndUpdate({_id:checkRenewalPackage[0]._id},{DirectReferalDone:"true"})
+        }
+
+
+
 
 
 
       }
+
+
+
+    }
+
+    // here ends
+
+    const createPackage = await PackageHistory({
+      PackageName: findPackage.PackageName,
+      PackagePrice: findPackage.PackagePrice,
+      PaackagePeriod: findPackage.PaackagePeriod,
+      PackageMaximumLimit: '300',
+      LykaToken: Lamount,
+      PackgeRewardWallte: '0',
+      PackageOwner: id,
+      Type: "Basic"
+    }).save()
+
+
+    const createAnotherEntry = await User.findOneAndUpdate({ _id: id }, { PurchasedPackageName: findPackage.PackageName, PurchasedPackagePrice: Number(findPackage.PackagePrice), PurchasedPackageDate: "today" })
+
+    return res.json('Package Created Successfully')
+
+
+  } else {
+
+
+    await PackageHistory.findByIdAndDelete(checkPackageHis[0]._id)
+    if (checkRenewalPackage.length !== 0) {
+      await RenewalPurchasePackage.findByIdAndDelete(checkRenewalPackage[0]._id)
     }
 
 
-    const upperlineWallet = findUplineUserDetails.PurchasedPackagePrice
+    var Lamount = Number(Anount) * 30
 
-    if (findPackage.PackagePrice >= upperlineWallet) {
+    const findPackage = await Package.findById(packageId)
 
+    const findPackagePurchaseUser = await User.findById(id)
 
-      
-      const AddRankEligibility = await RankEligibilityBonusFill({
-  
-        UpperLineUserId:uplineUser,
-        DownLineUserId:id,
-        BusinessAmount:findPackage.PackagePrice,
-        BusinessMonth:month,
-        BusinessYear:date.getFullYear()
-  
+    const uplineUser = findPackagePurchaseUser.UpperlineUser
+
+    console.log(uplineUser)
+
+    if (uplineUser !== 'null') {
+      var findUplineUserDetails = await User.findById(uplineUser)
+
+      const lastWallete = findUplineUserDetails.MainWallet
+
+      const PackagePercantage = (Number(findPackage.PackagePrice) * Number(findPackage.PackageReferalCommision)) / 100
+
+      const calWallete = Number(lastWallete) + Number(PackagePercantage)
+
+      await User.findByIdAndUpdate({ _id: uplineUser }, { MainWallet: calWallete })
+
+      const ReferalHistory = await ReferralHistory({
+        ReferralFrom: findUplineUserDetails.SponserCode,
+        ReferralTo: uplineUser,
+        ReferralCoins: PackagePercantage,
+        ReferralPercantage: findPackage.PackageReferalCommision,
+        PackageName: findPackage.PackageName
       }).save()
-      
-      const AddRankEligibilityHistory = await RankBonusHistory({
-        UpperLineUserId:uplineUser,
-        UpperLineUserSponser:findUplineUserDetails.SponserCode,
-        UpperLineUserEmail:findUplineUserDetails.EmailId,
-        DownLineUserId:id,
-        DownLineUserSponser:findPackagePurchaseUser.SponserCode,
-        DownLineUserEmail:findPackagePurchaseUser.EmailId,
-        BusinessAmount:findPackage.PackagePrice,
-        PurchasedPackageName:findPackage.PackageName,
-        PurchasedPackagePrice:findPackage.PackagePrice
-  
-      }).save()
+
+      const uplinerCreationDate = findUplineUserDetails.createdAt
+
+      var date = new Date(uplinerCreationDate)
+      var dateToday = new Date()
+      var month = date.getMonth() + 1
+      var month2 = dateToday.getMonth() + 1
+
+      var creationDate = month + '/' + date.getDate() + '/' + date.getFullYear()
+      var todayDate = month2 + '/' + dateToday.getDate() + '/' + dateToday.getFullYear()
+
+      console.log(creationDate)
+      console.log(todayDate)
+
+      const date1 = new Date(creationDate)
+      const date2 = new Date(todayDate)
+      const diffTime = Math.abs(date2 - date1)
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+      console.log(diffDays + ' days')
+
+      if (diffDays <= 10) {
+        const findData = await LykaFastBonus.find({ FastBonusCandidate: uplineUser })
+
+        console.log(findData)
+
+        if (findData.length !== 0) {
+          const updateData = await LykaFastBonus.findByIdAndUpdate(
+            { _id: findData[0]._id },
+            { ReferLength: Number(findData[0].ReferLength) + 1 }
+          )
+        } else {
+          const createLykaFastBonus = await LykaFastBonus({
+            FastBonusCandidate: uplineUser,
+            ReferLength: '1'
+          }).save()
+
+          const CreateGlobalBonus = await GlobalBonus({
+            BonusOwner: id,
+            Percantage: "1"
+          }).save()
 
 
 
+        }
+      }
 
-      
+
+      const upperlineWallet = findUplineUserDetails.PurchasedPackagePrice
+
+      if (findPackage.PackagePrice >= upperlineWallet) {
+
+
+
+        const AddRankEligibility = await RankEligibilityBonusFill({
+
+          UpperLineUserId: uplineUser,
+          DownLineUserId: id,
+          BusinessAmount: findPackage.PackagePrice,
+          BusinessMonth: month,
+          BusinessYear: date.getFullYear()
+
+        }).save()
+
+        const AddRankEligibilityHistory = await RankBonusHistory({
+          UpperLineUserId: uplineUser,
+          UpperLineUserSponser: findUplineUserDetails.SponserCode,
+          UpperLineUserEmail: findUplineUserDetails.EmailId,
+          DownLineUserId: id,
+          DownLineUserSponser: findPackagePurchaseUser.SponserCode,
+          DownLineUserEmail: findPackagePurchaseUser.EmailId,
+          BusinessAmount: findPackage.PackagePrice,
+          PurchasedPackageName: findPackage.PackageName,
+          PurchasedPackagePrice: findPackage.PackagePrice
+
+        }).save()
+
+
+      }
+
+
+
     }
+
+    const createPackage = await PackageHistory({
+      PackageName: findPackage.PackageName,
+      PackagePrice: findPackage.PackagePrice,
+      PaackagePeriod: findPackage.PaackagePeriod,
+      PackageMaximumLimit: '300',
+      LykaToken: Lamount,
+      PackgeRewardWallte: '0',
+      PackageOwner: id,
+      Type: "Repurchased"
+    }).save()
+
+
+
+      await RenewalPurchasePackage({
+        PackageOwner:id
+    }).save()
+
+
+
+
+    await User.findByIdAndUpdate({ _id: id }, { UserEarnPercantage: "0%" })
+
+
+    const createAnotherEntry = await User.findOneAndUpdate({ _id: id }, { PurchasedPackageName: findPackage.PackageName, PurchasedPackagePrice: Number(findPackage.PackagePrice), PurchasedPackageDate: "today" })
+
+    return res.json('Package Created Successfully')
 
 
 
   }
 
-  const createPackage = await PackageHistory({
-    PackageName: findPackage.PackageName,
-    PackagePrice: findPackage.PackagePrice,
-    PaackagePeriod: findPackage.PaackagePeriod,
-    PackageMaximumLimit: '300',
-    LykaToken: Lamount,
-    PackgeRewardWallte: '0',
-    PackageOwner: id
-  }).save()
-
-
-  const createAnotherEntry = await User.findOneAndUpdate({_id:id},{PurchasedPackageName:findPackage.PackageName,PurchasedPackagePrice:Number(findPackage.PackagePrice),PurchasedPackageDate:"today"})
-
-  res.json('Package Created Successfully')
 }

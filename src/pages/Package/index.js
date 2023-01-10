@@ -20,10 +20,12 @@ const MUITable = () => {
   const [datas, setDatas] = useState('')
   const [showHistoryScreen, setShowHistoryScreen] = useState(null)
   const [TopUpHistory, setTopUpHistory] = useState('')
+  const [myPackagePrice, setMyPackagePrice] = useState("")
 
   useEffect(() => {
     getData()
     getAllPackages()
+    getMyPackage()
   }, [])
 
   const getData = () => {
@@ -64,6 +66,38 @@ const MUITable = () => {
     }
   }
 
+  const getMyPackage = ()=>{
+    const ids = localStorage.getItem("jwt")
+    const parsedData = JSON.parse(ids)
+
+
+    try {
+      
+      axios.post("/api/Package/getMyPackage",{
+        id:parsedData._id
+      })
+      .then((acc)=>{
+        console.log(acc.data)
+        setMyPackagePrice(acc.data)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+
+
+    } catch (error) {
+      console.log(error)
+    }
+
+
+
+
+
+  }
+
+
+
+
   const handlePurchaseTopUp = () => {
     var data = localStorage.getItem('jwt')
     var parseData = JSON.parse(data)
@@ -91,7 +125,7 @@ const MUITable = () => {
   return (
     <>
       {showHistoryScreen == true ? (
-        <PackageHistory TopUpHistory={TopUpHistory} />
+        <PackageHistory setShowHistoryScreen={setShowHistoryScreen} TopUpHistory={TopUpHistory} />
       ) : (
         showHistoryScreen == false && (
           <Grid container spacing={6}>
@@ -115,6 +149,14 @@ const MUITable = () => {
                     >
                       {datas ? (
                         datas.map(acc => {
+
+
+                          if (Number(acc.PackagePrice) < Number(myPackagePrice)) {
+                            return 
+                          }
+
+
+
                           return (
                             <MenuItem key={acc._id} value={acc._id}>
                               {acc.PackageName} - ${acc.PackagePrice}

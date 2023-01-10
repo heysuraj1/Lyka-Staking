@@ -83,6 +83,10 @@ const User = mongoose.Schema(
     PurchasedPackageDate: {
       type: 'String',
       required:false
+    },
+    UserEarnPercantage:{
+      type: 'String',
+      default:"0%"
     }
 
   },
@@ -91,4 +95,4 @@ const User = mongoose.Schema(
   }
 )
 
-export default mongoose.models.myuse || mongoose.model('myuse', User)
+export default mongoose.models.myuserp || mongoose.model('myuserp', User)

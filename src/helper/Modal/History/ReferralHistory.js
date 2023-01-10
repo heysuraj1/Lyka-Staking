@@ -25,7 +25,7 @@ const ReferalHistory = mongoose.Schema(
     Type: {
       type: 'String',
       default:"referal"
-    }
+    },
   },
   {
     timestamps: true

@@ -146,6 +146,15 @@ const TabAccount = ({datas}) => {
              value={datas.SponserCode}
             />
           </Grid>
+          <Grid item xs={12} sm={6}>
+          <TextField
+              fullWidth
+              type='text'
+              label='Earning Percantage'
+              placeholder='Earning Percantage'
+             value={datas.UserEarnPercantage}
+            />
+          </Grid>
 
         </Grid>
       </form>

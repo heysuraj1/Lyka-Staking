@@ -29,6 +29,10 @@ const PackageHistory =  mongoose.Schema(
     PackgeRewardWallte: {
       required:true,
       type: 'String'
+    },
+    Type:{
+      required:true,
+      type: 'String'
     }
   },
   {
