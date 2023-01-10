@@ -35,6 +35,8 @@ export default async (req, res) => {
 
     var per = 0.3
 
+    var FindMainUserReferals = []
+
 
    
     if (findFastBonus.length !== 0) {
@@ -49,7 +51,7 @@ export default async (req, res) => {
 
   
 
-      var FindMainUserReferals = await User.find({UpperlineUser:findMainUser,PurchasedPackagePrice:  { $gte: Number(MainUserPackagePrice) } })
+      FindMainUserReferals = await User.find({UpperlineUser:findMainUser,PurchasedPackagePrice:  { $gte: Number(MainUserPackagePrice) } })
 
 
 
