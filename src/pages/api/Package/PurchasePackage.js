@@ -161,6 +161,7 @@ export default async (req, res) => {
       PackageOwner: id,
       Type: "Basic"
     }).save()
+
     const createPackageInvoice = await PurchasePackageInvoice({
       PackageName: findPackage.PackageName,
       PackagePrice: findPackage.PackagePrice,
@@ -308,6 +309,7 @@ export default async (req, res) => {
       PackageOwner: id,
       Type: "Repurchased"
     }).save()
+    
     const createPackageInvoice = await PurchasePackageInvoice({
       PackageName: findPackage.PackageName,
       PackagePrice: findPackage.PackagePrice,
