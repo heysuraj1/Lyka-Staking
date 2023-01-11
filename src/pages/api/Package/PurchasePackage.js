@@ -9,6 +9,7 @@ import RankEligibilityBonusFill from '../../../helper/Modal/Bonus/RankEligibilit
 import RankBonusHistory from '../../../helper/Modal/History/RankBonusHistory'
 import RenewalPurchasePackage from 'src/helper/Modal/Renewal/RenewalPurchasePackage'
 import RankEligibilityClaim from 'src/helper/Modal/History/RankEligibilityClaim'
+import PurchasePackageInvoice from 'src/helper/Modal/Invoice/PurchasePackageInvoice'
 
 initDB()
 
@@ -160,6 +161,16 @@ export default async (req, res) => {
       PackageOwner: id,
       Type: "Basic"
     }).save()
+    const createPackageInvoice = await PurchasePackageInvoice({
+      PackageName: findPackage.PackageName,
+      PackagePrice: findPackage.PackagePrice,
+      PaackagePeriod: findPackage.PaackagePeriod,
+      PackageMaximumLimit: '300',
+      LykaToken: Lamount,
+      PackgeRewardWallte: '0',
+      PackageOwner: id,
+      Type: "Basic"
+    }).save()
 
 
     const createAnotherEntry = await User.findOneAndUpdate({ _id: id }, { PurchasedPackageName: findPackage.PackageName, PurchasedPackagePrice: Number(findPackage.PackagePrice), PurchasedPackageDate: "today" })
@@ -288,6 +299,16 @@ export default async (req, res) => {
     }
 
     const createPackage = await PackageHistory({
+      PackageName: findPackage.PackageName,
+      PackagePrice: findPackage.PackagePrice,
+      PaackagePeriod: findPackage.PaackagePeriod,
+      PackageMaximumLimit: '300',
+      LykaToken: Lamount,
+      PackgeRewardWallte: '0',
+      PackageOwner: id,
+      Type: "Repurchased"
+    }).save()
+    const createPackageInvoice = await PurchasePackageInvoice({
       PackageName: findPackage.PackageName,
       PackagePrice: findPackage.PackagePrice,
       PaackagePeriod: findPackage.PaackagePeriod,

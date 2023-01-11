@@ -2,6 +2,8 @@ import initDB from "../../../helper/initDB";
 import RankBonusHistory from "../../../helper/Modal/History/RankBonusHistory";
 import User from "../../../helper/Modal/User";
 import PackageHistory from "../../../helper/Modal/History/PackageHistory";
+import RankEligibilityClaim from "src/helper/Modal/History/RankEligibilityClaim";
+
 
 initDB()
 
@@ -27,12 +29,12 @@ export default async(req,res)=>{
     
 
     // const RankBonusHistoryData = await RankBonusHistory.find({UpperLineUserId:id,created_on: {$gte: start, $lt: end}})
-    const RankBonusHistoryData = await PackageHistory.find({created_on: {$gte: start, $lt: end}})
+    const RankBonusHistoryData = await RankEligibilityClaim.find({created_on: {$gte: start, $lt: end}})
 
 
 
     RankBonusHistoryData.map((hit)=>{
-        return TotalBusiness = TotalBusiness + Number(hit.PackagePrice)
+        return TotalBusiness = TotalBusiness + Number(hit.TotBusiness)
     })
 
 
@@ -43,7 +45,7 @@ export default async(req,res)=>{
     
     const mainUserPackagePrice = Number(findMainUserPackage.PurchasedPackagePrice)
 
-    const rankEligibleForThatPackage = await PackageHistory.find({PackagePrice:mainUserPackagePrice})
+    const rankEligibleForThatPackage = await RankBonusHistoryData.find({PackageOwnPrice:mainUserPackagePrice})
 
     
 
