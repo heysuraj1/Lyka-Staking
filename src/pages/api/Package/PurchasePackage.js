@@ -16,10 +16,9 @@ export default async (req, res) => {
 
 
 
-
   const checkPackageHis = await PackageHistory.find({ PackageOwner: id })
 
-
+ var checkRenewalPackage = ""
 
   if (checkPackageHis == 0) {
 
@@ -36,7 +35,7 @@ export default async (req, res) => {
     if (uplineUser !== 'null') {
       var findUplineUserDetails = await User.findById(uplineUser)
 
-      var checkRenewalPackage = await RenewalPurchasePackage.find({ PackageOwner: uplineUser })
+      checkRenewalPackage = await RenewalPurchasePackage.find({ PackageOwner: uplineUser })
 
       console.log(checkRenewalPackage)
 
