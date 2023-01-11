@@ -16,8 +16,8 @@ export default async (req, res) => {
 
     const findForRankEligibility = await RankEligibilityBonusFill.find({ UpperLineUserId: element })
 
-    for (let index = 0; index < findData.length; index++) {
-      num = num + Number(findData[index].BusinessAmount)
+    for (let index = 0; index < findForRankEligibility.length; index++) {
+      num = num + Number(findForRankEligibility[index].BusinessAmount)
     }
 
 
@@ -54,11 +54,6 @@ export default async (req, res) => {
 
 
             }
-
-
-
-
-
           } else if (Number(findWhichPackageThatUserHasPurchased[0].PackagePrice) == 1000) {
 
             if (num >= 10000) {

@@ -4,6 +4,7 @@ import RankEligibilityBonusFill from "../../../helper/Modal/Bonus/RankEligibilit
 import PackageHistory from "../../../helper/Modal/History/PackageHistory";
 import User from "../../../helper/Modal/User";
 import Plan from "../../../helper/Modal/Plan";
+import RenewalPurchasePackage from "../../../helper/Modal/Renewal/RenewalPurchasePackage";
 
 initDB()
 
@@ -23,15 +24,6 @@ export default async (req, res) => {
     }
 
 
-    
-
-
-
-
-
-
-
-
     const MainUserData = await User.findById(id)
 
     const FindPackage = await Plan.findOne({ PackagePrice: MainUserData.PurchasedPackagePrice })
@@ -41,6 +33,24 @@ export default async (req, res) => {
 
 
     await User.findByIdAndUpdate({ _id: id }, { MainWallet: NewWallet }) // giving reward
+
+
+    // finding renwal
+    const findOldReneal = await RenewalPurchasePackage.find({PackageOwner:id})
+
+    if (findOldReneal.length !== 0) {
+
+        await RenewalPurchasePackage.findByIdAndUpdate({_id:findOldReneal[0]._id},{RankEligibility:"false"})
+        
+    }
+
+
+
+
+
+
+
+
 
 
     RankEligibilityClaim({

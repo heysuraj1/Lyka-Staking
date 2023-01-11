@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-
-
 const RenewalPurchasePackage = mongoose.Schema({
 
     PackageOwner: {

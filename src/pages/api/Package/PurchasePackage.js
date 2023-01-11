@@ -8,8 +8,10 @@ import GlobalBonus from '../../../helper/Modal/Bonus/GlobalBonus'
 import RankEligibilityBonusFill from '../../../helper/Modal/Bonus/RankEligibilityBonusFill'
 import RankBonusHistory from '../../../helper/Modal/History/RankBonusHistory'
 import RenewalPurchasePackage from 'src/helper/Modal/Renewal/RenewalPurchasePackage'
+import RankEligibilityClaim from 'src/helper/Modal/History/RankEligibilityClaim'
 
 initDB()
+
 
 export default async (req, res) => {
   const { packageId, Anount, id } = req.body
@@ -295,6 +297,13 @@ export default async (req, res) => {
       PackageOwner: id,
       Type: "Repurchased"
     }).save()
+
+
+    const updateDataS = await RankEligibilityClaim.findOne({RankEligibilityClaimOwnerId:id})
+
+    // const updatesdatas = await RankEligibilityClaim.findByIdAndUpdate({_id:updateDataS._id},{})
+
+    const deleteOldData = await RankEligibilityClaim.findByIdAndDelete(updateDataS._id)
 
 
 
